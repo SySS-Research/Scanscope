@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script>const portMapTCP = {{port_map_tcp}}; const portMapUDP = {{port_map_udp}};</script>
+{% endblock %}
+
+{% block content %}
+<h3>Hosts</h3>
+
+<div id="hosts-table" class="table"></div>
+
+{% include "html-templates.html" %}
+
+<script>
+    async function main(){
+        await initDb();
+
+        const config = { subtree: true, childList: true };
+        const observer = new MutationObserver(mutationCallback);
+        observer.observe(document.body, config);
+
+        const grid = makeGrid("hosts");
+        grid.render(document.getElementById("hosts-table"));
+    };
+
+    window.addEventListener("load", main);
+</script>
+
+{% endblock %}

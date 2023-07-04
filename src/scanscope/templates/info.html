@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Info</h3>
+<p>Scanscope presents information from a port scan for humans.
+
+<h4 class="mt-3">The Diagram</h4>
+<p>The diagram can look confusing at first glance, so here is some
+clarification. Let's go over some important details.
+<ul>
+<li><b>Host group:</b> All hosts that have the same set of ports open belong
+to the same host group. Filtered ports count as closed.
+<li><b>Fingerprint:</b> For technical reasons, we assign a set of ports a
+fingerprint, which is a hexadecimal number with 32 digits. There is one
+special case: The emtpy set, i.e. an active host with no open ports, is
+assigned a <code>NULL</code> value.
+<li><b>Color:</b> Each fingerprint is assigned a color to create a visual
+aid for differentiating between host groups. It has no special
+meaning. Because there are many fingerprints, colors can be very similar.
+This is a natural consequence and a known limitation. The <code>NULL</code>
+fingerprint is assigned the color grey.
+<li><b>TCP/UDP ports:</b> For brevity, we leave out the designation TCP/UDP.
+Instead, we define positive port numbers as TCP and negative port numbers as
+UDP; i.e. port <code>-53</code> is <code>53/udp</code>. The top 14 used ports
+(according to Nmap) are color coded.
+<li><b>Coordinates:</b> The coordinates in the 2D diagram are derived by
+projecting points in a 2<sup>17</sup> dimensional space onto two dimensions using
+algorithms from data science. They have no particular meaning and have a
+random component, so the diagram will look different each time you run Scanscope. The aim is
+that similar host groups are nearby.
+<li><b>Limitations:</b> As usual, firewalls and other network components
+between your device and the targeted systems can skew the results of a port
+scan. Also, the more ports you scan the better the result. In terms of Nmap
+arguments, <code>-p-</code> (i.e. all TCP ports) is best while <code>-F</code> (i.e. the top 100 ports)
+should represent a reasonable balance between speed and meaningfulness of
+the results.
+</ul>
+
+<h4 class="mt-3">Copyright</h4>
+Scanscope has been developed by Adrian Vollmer at <a
+href="https://www.syss.de" title="SySS GmbH" target="_blank">SySS GmbH</a>. It is MIT
+licensed.
+
+<h4 class="mt-3">Licenses</h4>
+Scanscope bundles some open source libraries. The license details can be
+found <a href="licenses.html">here</a>.
+{% endblock %}

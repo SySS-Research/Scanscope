@@ -1,0 +1,80 @@
+div.bokeh-popup{
+    position: absolute;
+    padding: 10px;
+    background: var(--bs-secondary-bg);
+    border: 1px solid var(--bs-secondary);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+div.bokeh-host-group {
+    min-height: 25px;
+    border-left-width: 3px;
+    border-left-style: solid;
+}
+
+div.bokeh-host-group-separator {
+    height: 5px;
+}
+
+div.bokeh-host-group-list-head {
+    display: table;
+}
+
+div.bokeh-host-group-list-head-row{
+    display: table-row;
+}
+
+div#bokeh-div {
+    height: 90vh;
+}
+
+div.row-cell{
+    display: table-cell;
+}
+
+div.row-cell>*{
+    padding: 6px;
+}
+
+.scanscope-host-list span:nth-child(odd) {
+    color: var(--bs-secondary-text-emphasis);
+}
+
+span.scanscope-host-address {
+    font-family: monospace;
+}
+
+.scanscope-host-list {
+    position: relative;
+}
+
+.scanscope-host-list .host-list-context-menu {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 5px 5px 0 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.scanscope-host-list:hover .host-list-context-menu {
+    opacity: 1;
+}
+
+.host-list-context-menu > button {
+    padding: 0.25rem 0.25rem;
+    font-size: 0.75rem;
+    height: 21px;
+    width: 21px;
+    border-radius: 50%;
+    background: none;
+}
+
+.host-list-context-menu > button::after {
+    margin-left: 0px !important;
+}
+
+div.table td{
+    font-family: monospace;
+}

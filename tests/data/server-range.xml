@@ -1,0 +1,1582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.70 scan initiated Thu Jul  6 08:48:07 2023 as: nmap -sS -iL /home/sb/rootservers/list -Pn -vv -p- -oA /home/sb/Pentest/raw/nmap/nmap_ROOTSERVERS_sS_p-all_2023-07-06_08-48-04 -&#45;min-rate=1000 -&#45;open -T4 -->
+<nmaprun scanner="nmap" args="nmap -sS -iL /home/sb/rootservers/list -Pn -vv -p- -oA /home/sb/Pentest/raw/nmap/nmap_ROOTSERVERS_sS_p-all_2023-07-06_08-48-04 -&#45;min-rate=1000 -&#45;open -T4" start="1688626087" startstr="Thu Jul  6 08:48:07 2023" version="7.70" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="ARP Ping Scan" time="1688626087"/>
+<taskend task="ARP Ping Scan" time="1688626088" extrainfo="112 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 112 hosts." time="1688626088"/>
+<taskend task="Parallel DNS resolution of 112 hosts." time="1688626088"/>
+<taskbegin task="SYN Stealth Scan" time="1688626088"/>
+<taskprogress task="SYN Stealth Scan" time="1688626119" percent="3.13" remaining="961" etc="1688627079"/>
+<taskprogress task="SYN Stealth Scan" time="1688626149" percent="6.29" remaining="909" etc="1688627058"/>
+<taskprogress task="SYN Stealth Scan" time="1688626206" percent="12.07" remaining="860" etc="1688627066"/>
+<taskprogress task="SYN Stealth Scan" time="1688626254" percent="17.01" remaining="810" etc="1688627064"/>
+<taskprogress task="SYN Stealth Scan" time="1688626302" percent="21.96" remaining="761" etc="1688627062"/>
+<taskprogress task="SYN Stealth Scan" time="1688626350" percent="26.93" remaining="711" etc="1688627061"/>
+<taskprogress task="SYN Stealth Scan" time="1688626401" percent="32.15" remaining="661" etc="1688627062"/>
+<taskprogress task="SYN Stealth Scan" time="1688626452" percent="37.40" remaining="610" etc="1688627061"/>
+<taskprogress task="SYN Stealth Scan" time="1688626503" percent="42.55" remaining="561" etc="1688627063"/>
+<taskprogress task="SYN Stealth Scan" time="1688626554" percent="47.73" remaining="511" etc="1688627064"/>
+<taskprogress task="SYN Stealth Scan" time="1688626605" percent="53.02" remaining="459" etc="1688627063"/>
+<taskprogress task="SYN Stealth Scan" time="1688626653" percent="58.01" remaining="410" etc="1688627062"/>
+<taskprogress task="SYN Stealth Scan" time="1688626704" percent="63.31" remaining="358" etc="1688627061"/>
+<taskprogress task="SYN Stealth Scan" time="1688626752" percent="68.30" remaining="309" etc="1688627060"/>
+<taskprogress task="SYN Stealth Scan" time="1688626815" percent="73.76" remaining="259" etc="1688627074"/>
+<taskprogress task="SYN Stealth Scan" time="1688626923" percent="79.94" remaining="210" etc="1688627132"/>
+<taskprogress task="SYN Stealth Scan" time="1688627042" percent="85.98" remaining="156" etc="1688627198"/>
+<taskprogress task="SYN Stealth Scan" time="1688627126" percent="91.32" remaining="99" etc="1688627225"/>
+<taskprogress task="SYN Stealth Scan" time="1688627201" percent="96.40" remaining="42" etc="1688627243"/>
+<taskend task="SYN Stealth Scan" time="1688627256" extrainfo="524280 total ports"/>
+<host starttime="1688626087" endtime="1688627216"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.162" addrtype="ipv4"/>
+<address addr="00:50:56:BD:72:10" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pta2.sy.gs" type="user"/>
+<hostname name="pta2.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="165" rttvar="6" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627070"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.111" addrtype="ipv4"/>
+<address addr="00:50:56:BD:FD:D7" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptaf.sy.gs" type="user"/>
+<hostname name="ptaf.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8834"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="nessus-xmlrpc" method="table" conf="3"/></port>
+</ports>
+<times srtt="134" rttvar="14" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627058"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.160" addrtype="ipv4"/>
+<address addr="00:50:56:BD:FB:BD" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptag.sy.gs" type="user"/>
+<hostname name="ptag.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65531">
+<extrareasons reason="resets" count="65531"/>
+</extraports>
+<extraports state="filtered" count="1">
+<extrareasons reason="no-response" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="130" rttvar="12" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627227"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.67" addrtype="ipv4"/>
+<address addr="00:50:56:BD:52:69" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptav.sy.gs" type="user"/>
+<hostname name="ptav.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-responses" count="65530"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8022"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="oa-system" method="table" conf="3"/></port>
+</ports>
+<times srtt="201" rttvar="23" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627225"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.121" addrtype="ipv4"/>
+<address addr="00:50:56:BD:2A:C4" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptaw.sy.gs" type="user"/>
+<hostname name="ptaw.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="134" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627223"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.159" addrtype="ipv4"/>
+<address addr="00:50:56:BD:E6:AC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptcb.sy.gs" type="user"/>
+<hostname name="ptcb.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="31337"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="Elite" method="table" conf="3"/></port>
+</ports>
+<times srtt="195" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627256"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.138" addrtype="ipv4"/>
+<address addr="00:50:56:BD:6F:DE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptcf.sy.gs" type="user"/>
+<hostname name="ptcf.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="232" rttvar="18" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688627055"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.70" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F8:D1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptck.sy.gs" type="user"/>
+<hostname name="ptck.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="81"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="hosts2-ns" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="40000"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="safetynetp" method="table" conf="3"/></port>
+</ports>
+<times srtt="115" rttvar="8" to="100000"/>
+</host>
+<taskbegin task="SYN Stealth Scan" time="1688627256"/>
+<taskprogress task="SYN Stealth Scan" time="1688627377" percent="1.27" remaining="9428" etc="1688636805"/>
+<taskprogress task="SYN Stealth Scan" time="1688627800" percent="5.73" remaining="8951" etc="1688636750"/>
+<taskprogress task="SYN Stealth Scan" time="1688628322" percent="11.18" remaining="8473" etc="1688636795"/>
+<taskprogress task="SYN Stealth Scan" time="1688628805" percent="16.23" remaining="7993" etc="1688636798"/>
+<taskprogress task="SYN Stealth Scan" time="1688629282" percent="21.24" remaining="7515" etc="1688636796"/>
+<taskprogress task="SYN Stealth Scan" time="1688629765" percent="26.29" remaining="7035" etc="1688636799"/>
+<taskprogress task="SYN Stealth Scan" time="1688630299" percent="31.70" remaining="6557" etc="1688636855"/>
+<taskprogress task="SYN Stealth Scan" time="1688630782" percent="36.72" remaining="6076" etc="1688636857"/>
+<taskprogress task="SYN Stealth Scan" time="1688631268" percent="41.77" remaining="5593" etc="1688636860"/>
+<taskprogress task="SYN Stealth Scan" time="1688631751" percent="46.80" remaining="5111" etc="1688636861"/>
+<taskprogress task="SYN Stealth Scan" time="1688632297" percent="52.14" remaining="4628" etc="1688636925"/>
+<taskprogress task="SYN Stealth Scan" time="1688632783" percent="57.16" remaining="4144" etc="1688636926"/>
+<taskprogress task="SYN Stealth Scan" time="1688633269" percent="62.18" remaining="3659" etc="1688636927"/>
+<taskprogress task="SYN Stealth Scan" time="1688633812" percent="67.39" remaining="3172" etc="1688636984"/>
+<taskprogress task="SYN Stealth Scan" time="1688634364" percent="72.58" remaining="2685" etc="1688637049"/>
+<taskprogress task="SYN Stealth Scan" time="1688634934" percent="77.78" remaining="2194" etc="1688637127"/>
+<taskprogress task="SYN Stealth Scan" time="1688635522" percent="82.96" remaining="1698" etc="1688637220"/>
+<taskprogress task="SYN Stealth Scan" time="1688636329" percent="88.32" remaining="1200" etc="1688637528"/>
+<taskprogress task="SYN Stealth Scan" time="1688637091" percent="93.50" remaining="685" etc="1688637775"/>
+<taskprogress task="SYN Stealth Scan" time="1688637772" percent="98.53" remaining="157" etc="1688637929"/>
+<taskend task="SYN Stealth Scan" time="1688637950" extrainfo="4194240 total ports"/>
+<host starttime="1688626087" endtime="1688637337"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.83" addrtype="ipv4"/>
+<address addr="00:50:56:BD:4B:B8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptdb.sy.gs" type="user"/>
+<hostname name="ptdb.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="resets" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="136" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637558"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.74" addrtype="ipv4"/>
+<address addr="00:50:56:BD:A7:4D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptdi.sy.gs" type="user"/>
+<hostname name="ptdi.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="173" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637486"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.76" addrtype="ipv4"/>
+<address addr="00:50:56:BD:B8:62" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptdr.sy.gs" type="user"/>
+<hostname name="ptdr.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="181" rttvar="17" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637590"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.191" addrtype="ipv4"/>
+<address addr="00:50:56:BD:AD:22" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptedu01.sy.gs" type="user"/>
+<hostname name="ptedu01.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="132" rttvar="14" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637932"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.147" addrtype="ipv4"/>
+<address addr="00:50:56:BD:4F:2A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pteh.sy.gs" type="user"/>
+<hostname name="pteh.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="323" rttvar="125" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637698"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.168" addrtype="ipv4"/>
+<address addr="00:50:56:BD:49:5D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptew.sy.gs" type="user"/>
+<hostname name="ptew.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="137" rttvar="3" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637947"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.141" addrtype="ipv4"/>
+<address addr="00:50:56:BD:E4:3A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptf1.sy.gs" type="user"/>
+<hostname name="ptf1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="184" rttvar="18" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637469"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.91" addrtype="ipv4"/>
+<address addr="00:50:56:BD:1F:E9" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptf2.sy.gs" type="user"/>
+<hostname name="ptf2.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="132" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637792"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.166" addrtype="ipv4"/>
+<address addr="00:50:56:BD:55:8F" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptf3.sy.gs" type="user"/>
+<hostname name="ptf3.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="191" rttvar="39" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637717"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.120" addrtype="ipv4"/>
+<address addr="00:50:56:BD:77:72" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfa.sy.gs" type="user"/>
+<hostname name="ptfa.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="121" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637337"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.79" addrtype="ipv4"/>
+<address addr="00:50:56:BD:8D:F5" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfj.sy.gs" type="user"/>
+<hostname name="ptfj.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="132" rttvar="8" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637905"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.136" addrtype="ipv4"/>
+<address addr="00:50:56:BD:FE:A9" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfk.sy.gs" type="user"/>
+<hostname name="ptfk.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65528">
+<extrareasons reason="no-responses" count="65528"/>
+</extraports>
+<extraports state="closed" count="6">
+<extrareasons reason="resets" count="6"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="299" rttvar="67" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637457"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.92" addrtype="ipv4"/>
+<address addr="00:50:56:BD:A0:2E" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfr.sy.gs" type="user"/>
+<hostname name="ptfr.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8022"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="oa-system" method="table" conf="3"/></port>
+</ports>
+<times srtt="182" rttvar="24" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637941"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.155" addrtype="ipv4"/>
+<address addr="00:50:56:BD:76:F8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfs.sy.gs" type="user"/>
+<hostname name="ptfs.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="162" rttvar="18" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637610"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.103" addrtype="ipv4"/>
+<address addr="00:50:56:BD:76:BF" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptfw.sy.gs" type="user"/>
+<hostname name="pttk.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="140" rttvar="16" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637886"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.163" addrtype="ipv4"/>
+<address addr="00:50:56:BD:D2:11" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptj2.sy.gs" type="user"/>
+<hostname name="ptj2.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="10101"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ezmeeting-2" method="table" conf="3"/></port>
+</ports>
+<times srtt="158" rttvar="51" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637742"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.122" addrtype="ipv4"/>
+<address addr="00:50:56:BD:45:94" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjd.sy.gs" type="user"/>
+<hostname name="ptjd.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1194"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="openvpn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="42218"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="160" rttvar="11" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637751"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.124" addrtype="ipv4"/>
+<address addr="00:50:56:BD:72:92" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjf.sy.gs" type="user"/>
+<hostname name="ptjf.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="163" rttvar="11" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637950"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.150" addrtype="ipv4"/>
+<address addr="00:50:56:BD:5C:57" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjg.sy.gs" type="user"/>
+<hostname name="ptjg.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="173" rttvar="20" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637931"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.156" addrtype="ipv4"/>
+<address addr="00:50:56:BD:3D:40" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptji.sy.gs" type="user"/>
+<hostname name="ptji.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="155" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637944"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.142" addrtype="ipv4"/>
+<address addr="00:50:56:BD:5B:14" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjk.sy.gs" type="user"/>
+<hostname name="ptjk.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="378" rttvar="63" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637438"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.105" addrtype="ipv4"/>
+<address addr="00:50:56:BD:CF:A6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjl.sy.gs" type="user"/>
+<hostname name="ptjl.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="143" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637807"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.164" addrtype="ipv4"/>
+<address addr="00:50:56:BD:42:DD" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjm.sy.gs" type="user"/>
+<hostname name="ptjm.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="135" rttvar="20" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637267"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.54" addrtype="ipv4"/>
+<address addr="00:50:56:B1:4B:9A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjs.sy.gs" type="user"/>
+<hostname name="ptjs.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="resets" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="63110"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="109" rttvar="6" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637425"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.78" addrtype="ipv4"/>
+<address addr="00:50:56:BD:08:D5" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjv.sy.gs" type="user"/>
+<hostname name="ptjv.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="55576"/>
+<extrareasons reason="admin-prohibiteds" count="9956"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="140" rttvar="8" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637948"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.146" addrtype="ipv4"/>
+<address addr="00:50:56:BD:D9:36" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptjz.sy.gs" type="user"/>
+<hostname name="ptjz.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-responses" count="65530"/>
+</extraports>
+<extraports state="closed" count="4">
+<extrareasons reason="resets" count="4"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="157" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637904"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.161" addrtype="ipv4"/>
+<address addr="00:50:56:BD:74:1D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptk1.sy.gs" type="user"/>
+<hostname name="ptk1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="179" rttvar="17" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637590"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.95" addrtype="ipv4"/>
+<address addr="00:50:56:BD:90:45" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptkl.sy.gs" type="user"/>
+<hostname name="ptkl.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="241" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637787"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.165" addrtype="ipv4"/>
+<address addr="00:50:56:BD:98:F8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptl1.sy.gs" type="user"/>
+<hostname name="ptl1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="164" rttvar="8" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637463"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.80" addrtype="ipv4"/>
+<address addr="00:50:56:BD:01:54" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptl2.sy.gs" type="user"/>
+<hostname name="ptl2.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="21212"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="trinket-agent" method="table" conf="3"/></port>
+</ports>
+<times srtt="180" rttvar="27" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637399"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.85" addrtype="ipv4"/>
+<address addr="00:50:56:BD:33:44" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptls.sy.gs" type="user"/>
+<hostname name="ptls.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="resets" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="118" rttvar="6" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637930"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.158" addrtype="ipv4"/>
+<address addr="00:50:56:BD:E9:A8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm1.sy.gs" type="user"/>
+<hostname name="ptm1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65527">
+<extrareasons reason="no-responses" count="65527"/>
+</extraports>
+<extraports state="closed" count="5">
+<extrareasons reason="resets" count="5"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1194"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="openvpn" method="table" conf="3"/></port>
+</ports>
+<times srtt="130" rttvar="12" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637536"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.86" addrtype="ipv4"/>
+<address addr="00:50:56:BD:DA:3A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm3.sy.gs" type="user"/>
+<hostname name="ptm3.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65529">
+<extrareasons reason="no-responses" count="65529"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="222"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="rsh-spx" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="165" rttvar="14" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637351"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.87" addrtype="ipv4"/>
+<address addr="00:50:56:BD:A0:7A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm5.sy.gs" type="user"/>
+<hostname name="ptm5.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="resets" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="158" rttvar="16" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637470"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.112" addrtype="ipv4"/>
+<address addr="00:50:56:BD:74:03" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm6.sy.gs" type="user"/>
+<hostname name="ptm6.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="2211"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="emwin" method="table" conf="3"/></port>
+</ports>
+<times srtt="153" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637729"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.123" addrtype="ipv4"/>
+<address addr="00:50:56:BD:D8:E8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm8.sy.gs" type="user"/>
+<hostname name="ptm8.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="149" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637949"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.151" addrtype="ipv4"/>
+<address addr="00:50:56:BD:10:B4" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptm9.sy.gs" type="user"/>
+<hostname name="ptm9.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="146" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637400"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.56" addrtype="ipv4"/>
+<address addr="00:50:56:BD:EB:A3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptma.sy.gs" type="user"/>
+<hostname name="ptma.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<extraports state="filtered" count="1">
+<extrareasons reason="no-response" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+</ports>
+<times srtt="155" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637315"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.63" addrtype="ipv4"/>
+<address addr="00:50:56:BD:0B:F7" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmb.sy.gs" type="user"/>
+<hostname name="ptmb.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65521">
+<extrareasons reason="resets" count="65521"/>
+</extraports>
+<port protocol="tcp" portid="21"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ftp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="23"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="telnet" method="table" conf="3"/></port>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="smtp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="110"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="pop3" method="table" conf="3"/></port>
+<port protocol="tcp" portid="113"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ident" method="table" conf="3"/></port>
+<port protocol="tcp" portid="123"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ntp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="465"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="smtps" method="table" conf="3"/></port>
+<port protocol="tcp" portid="993"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="imaps" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3389"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ms-wbt-server" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5353"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="mdns" method="table" conf="3"/></port>
+</ports>
+<times srtt="142" rttvar="15" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637548"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.88" addrtype="ipv4"/>
+<address addr="00:50:56:BD:76:B1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmd.sy.gs" type="user"/>
+<hostname name="ptmd.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="176" rttvar="10" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637445"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.93" addrtype="ipv4"/>
+<address addr="00:50:56:BD:5C:A6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmg.sy.gs" type="user"/>
+<hostname name="ptmg.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="32123"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="406" rttvar="83" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637640"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.115" addrtype="ipv4"/>
+<address addr="00:50:56:BD:72:AC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmh.sy.gs" type="user"/>
+<hostname name="ptmh.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-responses" count="65530"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="43901"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="179" rttvar="27" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637309"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.75" addrtype="ipv4"/>
+<address addr="00:50:56:BD:0E:90" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmk.sy.gs" type="user"/>
+<hostname name="ptmk.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="172" rttvar="30" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637940"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.157" addrtype="ipv4"/>
+<address addr="00:50:56:BD:4F:44" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptmw.sy.gs" type="user"/>
+<hostname name="ptmw.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="442" rttvar="55" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637536"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.61" addrtype="ipv4"/>
+<address addr="00:50:56:BD:25:E1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptn1.sy.gs" type="user"/>
+<hostname name="pts1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="2222"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="EtherNetIP-1" method="table" conf="3"/></port>
+</ports>
+<times srtt="267" rttvar="26" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637934"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.140" addrtype="ipv4"/>
+<address addr="00:50:56:BD:56:AC" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptns.sy.gs" type="user"/>
+<hostname name="ptns.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="161" rttvar="12" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637890"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.132" addrtype="ipv4"/>
+<address addr="00:50:56:BD:89:60" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pto1.sy.gs" type="user"/>
+<hostname name="pto1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="2222"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="EtherNetIP-1" method="table" conf="3"/></port>
+</ports>
+<times srtt="170" rttvar="15" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637590"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.81" addrtype="ipv4"/>
+<address addr="00:50:56:BD:6F:4E" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptom.sy.gs" type="user"/>
+<hostname name="ptom.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="134" rttvar="12" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637822"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.126" addrtype="ipv4"/>
+<address addr="00:50:56:BD:42:EE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptos.sy.gs" type="user"/>
+<hostname name="ptos.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65520">
+<extrareasons reason="no-responses" count="65520"/>
+</extraports>
+<extraports state="closed" count="12">
+<extrareasons reason="resets" count="12"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="134" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637237"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.62" addrtype="ipv4"/>
+<address addr="00:50:56:BD:D4:43" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptpb.sy.gs" type="user"/>
+<hostname name="ptpb.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+</ports>
+<times srtt="137" rttvar="8" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637337"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.84" addrtype="ipv4"/>
+<address addr="00:50:56:BD:0B:B4" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptpm.sy.gs" type="user"/>
+<hostname name="ptpm.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="164" rttvar="27" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637661"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.109" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F4:29" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptps.sy.gs" type="user"/>
+<hostname name="ptps.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65524">
+<extrareasons reason="no-responses" count="65524"/>
+</extraports>
+<extraports state="closed" count="8">
+<extrareasons reason="resets" count="8"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="141" rttvar="8" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637575"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.27" addrtype="ipv4"/>
+<address addr="00:50:56:BD:CB:7D" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptrp.sy.gs" type="user"/>
+<hostname name="ptrp.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65528">
+<extrareasons reason="resets" count="65528"/>
+</extraports>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="smtp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="143"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="imap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="993"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="imaps" method="table" conf="3"/></port>
+<port protocol="tcp" portid="2345"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="dbm" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3333"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="dec-notes" method="table" conf="3"/></port>
+</ports>
+<times srtt="138" rttvar="21" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637822"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.127" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F0:92" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptrr.sy.gs" type="user"/>
+<hostname name="ptrr.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65529">
+<extrareasons reason="no-responses" count="65529"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1194"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="openvpn" method="table" conf="3"/></port>
+<port protocol="tcp" portid="33333"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="dgi-serv" method="table" conf="3"/></port>
+</ports>
+<times srtt="448" rttvar="100" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637779"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.131" addrtype="ipv4"/>
+<address addr="00:50:56:BD:56:CD" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptrt.sy.gs" type="user"/>
+<hostname name="ptrt.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65534">
+<extrareasons reason="resets" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="2222"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="EtherNetIP-1" method="table" conf="3"/></port>
+</ports>
+<times srtt="234" rttvar="34" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637948"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.145" addrtype="ipv4"/>
+<address addr="00:50:56:BD:36:40" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pts1.sy.gs" type="user"/>
+<hostname name="pts1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8834"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="nessus-xmlrpc" method="table" conf="3"/></port>
+</ports>
+<times srtt="243" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637526"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.97" addrtype="ipv4"/>
+<address addr="00:50:56:BD:5A:85" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pts6.sy.gs" type="user"/>
+<hostname name="pts6.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-responses" count="65530"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="162" rttvar="11" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637515"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.50" addrtype="ipv4"/>
+<address addr="00:50:56:BD:EC:B3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptsa.sy.gs" type="user"/>
+<hostname name="ptsa.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http-proxy" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https-alt" method="table" conf="3"/></port>
+</ports>
+<times srtt="138" rttvar="9" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637370"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.52" addrtype="ipv4"/>
+<address addr="00:50:56:B1:EC:57" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptsh.sy.gs" type="user"/>
+<hostname name="ptsh.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65530">
+<extrareasons reason="resets" count="65530"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https-alt" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8834"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="nessus-xmlrpc" method="table" conf="3"/></port>
+</ports>
+<times srtt="150" rttvar="15" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637938"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.143" addrtype="ipv4"/>
+<address addr="00:50:56:BD:C6:63" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptsi.sy.gs" type="user"/>
+<hostname name="ptsi.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="31921"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="376" rttvar="40" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637575"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.51" addrtype="ipv4"/>
+<address addr="00:50:56:BD:19:E0" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptsm.sy.gs" type="user"/>
+<hostname name="ptsm.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65530">
+<extrareasons reason="no-responses" count="65530"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="134" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637943"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.128" addrtype="ipv4"/>
+<address addr="00:50:56:BD:25:08" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptsr.sy.gs" type="user"/>
+<hostname name="ptsr.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65534">
+<extrareasons reason="no-responses" count="65534"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="191" rttvar="38" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637502"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.65" addrtype="ipv4"/>
+<address addr="00:50:56:BD:3C:A7" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptss.sy.gs" type="user"/>
+<hostname name="ptss.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="125" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688637826"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.125" addrtype="ipv4"/>
+<address addr="00:50:56:BD:EE:EE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptst.sy.gs" type="user"/>
+<hostname name="ptst.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65528">
+<extrareasons reason="no-responses" count="65528"/>
+</extraports>
+<extraports state="closed" count="4">
+<extrareasons reason="resets" count="4"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="131" rttvar="13" to="100000"/>
+</host>
+<taskbegin task="SYN Stealth Scan" time="1688637950"/>
+<taskprogress task="SYN Stealth Scan" time="1688637981" percent="2.30" remaining="1317" etc="1688639297"/>
+<taskprogress task="SYN Stealth Scan" time="1688638011" percent="4.71" remaining="1236" etc="1688639246"/>
+<taskprogress task="SYN Stealth Scan" time="1688638101" percent="11.45" remaining="1169" etc="1688639269"/>
+<taskprogress task="SYN Stealth Scan" time="1688638188" percent="17.79" remaining="1101" etc="1688639288"/>
+<taskprogress task="SYN Stealth Scan" time="1688638269" percent="23.62" remaining="1032" etc="1688639300"/>
+<taskprogress task="SYN Stealth Scan" time="1688638380" percent="30.87" remaining="963" etc="1688639343"/>
+<taskprogress task="SYN Stealth Scan" time="1688638470" percent="36.82" remaining="893" etc="1688639362"/>
+<taskprogress task="SYN Stealth Scan" time="1688638554" percent="42.41" remaining="821" etc="1688639374"/>
+<taskprogress task="SYN Stealth Scan" time="1688638638" percent="47.90" remaining="749" etc="1688639386"/>
+<taskprogress task="SYN Stealth Scan" time="1688638719" percent="53.31" remaining="674" etc="1688639393"/>
+<taskprogress task="SYN Stealth Scan" time="1688638797" percent="58.47" remaining="602" etc="1688639399"/>
+<taskprogress task="SYN Stealth Scan" time="1688638878" percent="63.73" remaining="529" etc="1688639406"/>
+<taskprogress task="SYN Stealth Scan" time="1688638959" percent="69.01" remaining="454" etc="1688639412"/>
+<taskprogress task="SYN Stealth Scan" time="1688639034" percent="74.12" remaining="379" etc="1688639413"/>
+<taskprogress task="SYN Stealth Scan" time="1688639160" percent="79.88" remaining="305" etc="1688639465"/>
+<taskprogress task="SYN Stealth Scan" time="1688639352" percent="86.00" remaining="229" etc="1688639580"/>
+<taskprogress task="SYN Stealth Scan" time="1688639580" percent="91.20" remaining="158" etc="1688639737"/>
+<taskprogress task="SYN Stealth Scan" time="1688639739" percent="96.37" remaining="68" etc="1688639806"/>
+<taskend task="SYN Stealth Scan" time="1688639837" extrainfo="1114095 total ports"/>
+<host starttime="1688626087" endtime="1688639837"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.96" addrtype="ipv4"/>
+<address addr="00:50:56:BD:53:D6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptt1.sy.gs" type="user"/>
+<hostname name="ptt1.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65531">
+<extrareasons reason="no-responses" count="65531"/>
+</extraports>
+<extraports state="closed" count="3">
+<extrareasons reason="resets" count="3"/>
+</extraports>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="179" rttvar="34" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639593"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.139" addrtype="ipv4"/>
+<address addr="00:50:56:BD:EB:7C" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptt3.sy.gs" type="user"/>
+<hostname name="ptt3.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65531">
+<extrareasons reason="resets" count="65531"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="1443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ies-lm" method="table" conf="3"/></port>
+</ports>
+<times srtt="142" rttvar="38" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639816"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.130" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F1:E8" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptta.sy.gs" type="user"/>
+<hostname name="ptta.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65533">
+<extrareasons reason="no-responses" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="251" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639785"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.137" addrtype="ipv4"/>
+<address addr="00:50:56:BD:60:E0" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptte.sy.gs" type="user"/>
+<hostname name="ptte.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="405" rttvar="73" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639589"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.102" addrtype="ipv4"/>
+<address addr="00:50:56:BD:4C:39" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptth.sy.gs" type="user"/>
+<hostname name="ptth.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="42424"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="118" rttvar="11" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639602"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.117" addrtype="ipv4"/>
+<address addr="00:50:56:BD:FD:B6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pttj.sy.gs" type="user"/>
+<hostname name="pttj.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="2222"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="EtherNetIP-1" method="table" conf="3"/></port>
+</ports>
+<times srtt="200" rttvar="14" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639837"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.104" addrtype="ipv4"/>
+<address addr="00:50:56:BD:CC:E3" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pttl.sy.gs" type="user"/>
+<hostname name="pttl.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="2">
+<extrareasons reason="resets" count="2"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+</ports>
+<times srtt="169" rttvar="22" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639822"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.77" addrtype="ipv4"/>
+<address addr="00:50:56:BD:0E:6C" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="pttv.sy.gs" type="user"/>
+<hostname name="pttv.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65532">
+<extrareasons reason="no-responses" count="65532"/>
+</extraports>
+<extraports state="closed" count="1">
+<extrareasons reason="reset" count="1"/>
+</extraports>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="171" rttvar="6" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639610"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.57" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F4:EE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptub.sy.gs" type="user"/>
+<hostname name="ptub.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65533">
+<extrareasons reason="resets" count="65533"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+</ports>
+<times srtt="127" rttvar="23" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639590"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.211" addrtype="ipv4"/>
+<address addr="00:50:56:BD:F9:F2" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptVPN01.sy.gs" type="user"/>
+<hostname name="ptvpn01.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65530">
+<extrareasons reason="resets" count="65530"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="914"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="915"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="943"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+</ports>
+<times srtt="124" rttvar="7" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639596"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.212" addrtype="ipv4"/>
+<address addr="00:50:56:BD:5A:06" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptVPN02.sy.gs" type="user"/>
+<hostname name="ptvpn02.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65530">
+<extrareasons reason="resets" count="65530"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="914"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="915"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="943"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+</ports>
+<times srtt="131" rttvar="27" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639615"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.213" addrtype="ipv4"/>
+<address addr="00:50:56:BD:A1:47" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptVPN03.sy.gs" type="user"/>
+<hostname name="ptvpn03.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65530">
+<extrareasons reason="resets" count="65530"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="914"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="915"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="943"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+</ports>
+<times srtt="128" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639826"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.153" addrtype="ipv4"/>
+<address addr="00:50:56:BD:38:8F" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptws.sy.gs" type="user"/>
+<hostname name="ptws.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65527">
+<extrareasons reason="no-responses" count="65527"/>
+</extraports>
+<extraports state="closed" count="5">
+<extrareasons reason="resets" count="5"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="202" rttvar="36" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639606"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.119" addrtype="ipv4"/>
+<address addr="00:50:56:BD:1D:0A" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptww.sy.gs" type="user"/>
+<hostname name="ptww.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="resets" count="65532"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="121" rttvar="16" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639598"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.59" addrtype="ipv4"/>
+<address addr="00:50:56:BD:A7:DB" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptwz.sy.gs" type="user"/>
+<hostname name="ptwz.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65531">
+<extrareasons reason="resets" count="65531"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http-proxy" method="table" conf="3"/></port>
+</ports>
+<times srtt="142" rttvar="13" to="100000"/>
+</host>
+<host starttime="1688626087" endtime="1688639815"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="185.142.184.133" addrtype="ipv4"/>
+<address addr="00:50:56:BD:43:86" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="ptys.sy.gs" type="user"/>
+<hostname name="ptys.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="filtered" count="65528">
+<extrareasons reason="no-responses" count="65528"/>
+</extraports>
+<extraports state="closed" count="4">
+<extrareasons reason="resets" count="4"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+</ports>
+<times srtt="165" rttvar="11" to="100000"/>
+</host>
+<taskbegin task="SYN Stealth Scan" time="1688639837"/>
+<taskend task="SYN Stealth Scan" time="1688639862" extrainfo="65535 total ports"/>
+<host starttime="1688639837" endtime="1688639862"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="185.142.184.94" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ptsb.sy.gs" type="user"/>
+<hostname name="ptsb.sy.gs" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65531">
+<extrareasons reason="resets" count="65531"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8834"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="nessus-xmlrpc" method="table" conf="3"/></port>
+</ports>
+<times srtt="22" rttvar="0" to="100000"/>
+</host>
+<runstats><finished time="1688639862" timestr="Thu Jul  6 12:37:42 2023" elapsed="13775.08" summary="Nmap done at Thu Jul  6 12:37:42 2023; 113 IP addresses (90 hosts up) scanned in 13775.08 seconds" exit="success"/><hosts up="90" down="23" total="113"/>
+</runstats>
+</nmaprun>

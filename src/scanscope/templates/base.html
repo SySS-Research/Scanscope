@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="{{theme}}">
+<head>
+    <link rel="icon" href="data:,">
+    <title>Scanscope: {{title}}</title>
+    {{- bokeh_css if bokeh_css }}
+    {{  bokeh_js if bokeh_js }}
+    <script>
+        const wasm_base = "{{wasm_base}}";
+        const wasm_codearray = "{{wasm_codearray}}";
+        const sqlite_db = "{{sqlite_db}}";
+    </script>
+{% for file in js_files %}
+    <script type="text/javascript" src="{{ file }}"></script>
+{% endfor %}
+{% for js in js_raw %}
+    <script type="text/javascript">
+        {{ js }}
+    </script>
+{% endfor %}
+{% for file in css_files %}
+    <link rel="stylesheet" href="{{ file }}" type="text/css" />
+{% endfor %}
+{% for css in css_raw %}
+    <style>
+        {{ css }}
+    </style>
+{% endfor %}
+{% block head %}
+{% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        {% include "sidebar.html" %}
+        <div class="col py-3 flex-grow-1">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

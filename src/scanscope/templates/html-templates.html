@@ -1,0 +1,58 @@
+<template id="template-popup">
+<div class="bokeh-popup">
+</div>
+</template>
+
+<template id="template-popup-host">
+<div class="mw-25 bokeh-popup-host">
+    <svg class="rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff" fill-opacity="0.8"></rect></svg>
+    <span class="group-size"></span> hosts: <span class="tcp-ports text-secondary"></span>
+</div>
+</template>
+
+<template id="template-host-group-list">
+<div class="bokeh-host-group-list">
+    <div class="bokeh-host-group-list-head">
+        <div class="bokeh-host-group-list-head-row">
+            <div class="row-cell">Ports intersection:</div>
+            <div class="row-cell"><span class="ports-intersection"></span></div>
+        </div>
+        <div class="bokeh-host-group-list-head-row">
+            <div class="row-cell">Ports union:</div>
+            <div class="row-cell"><span class="ports-union"></span></div>
+        </div>
+    </div>
+    <div class="bokeh-host-group-list-body pt-3">
+    </div>
+</div>
+</template>
+
+<template id="template-host-group">
+<div class="bokeh-host-group">
+    <div>
+        <div class="host-group-addresses scanscope-host-list ps-3"></div>
+        <div class="host-group-ports ps-3"></div>
+    </div>
+</div>
+<div class="bokeh-host-group-separator"></div>
+</template>
+
+<template id="template-host-address">
+    <span class="scanscope-host-address"></span>
+</template>
+
+<template id="template-port">
+    <span class="scanscope-port"></span>
+</template>
+
+<template id="template-hosts-list-context-menu">
+    <div class="dropdown host-list-context-menu">
+        <button class="btn btn-sm rounded-pill btn-secondary dropdown-toggle" type="button" id="host-group-context-menu" data-bs-toggle="dropdown" aria-expanded="false">
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="host-group-context-menu">
+            <li><a class="dropdown-item copy-line" href="#">Copy to clipboard (separated by line break)</a></li>
+            <li><a class="dropdown-item copy-comma" href="#">Copy to clipboard (separated by comma)</a></li>
+            <li><a class="dropdown-item copy-space" href="#">Copy to clipboard (separated by space)</a></li>
+        </ul>
+    </div>
+</template>

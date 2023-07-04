@@ -1,0 +1,26 @@
+_dev
+_version.py
+tests/_output
+
+# Build artifacts
+/build
+/dist
+__pycache__
+
+# Generated artifacts
+*.py[cod]
+*.egg-info
+.*cache*
+.idea
+
+# OS-specific files
+.DS_Store
+
+# Unit test / coverage reports
+.coverage
+.htmlcov
+.nox
+
+# Virtualenv directories
+[v]env
+.[v]env

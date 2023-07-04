@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Overview</h3>
+
+{% for report in reports %}
+<h4>Scan {{loop.index}}</h4>
+<dl>
+  <dt>Filename</dt>
+  <dd><code>{{report.filename}}</code></dd>
+
+  <dt>Nmap command</dt>
+  <dd><code>{{report.commandline}}</code></dd>
+
+  <dt>Nmap version</dt>
+  <dd>{{report.version}}</dd>
+
+  <dt>Scan started</dt>
+  <dd>{{report.started|strftime}}</dd>
+
+  <dt>Scan ended</dt>
+  <dd>{{report.endtime|strftime}}</dd>
+
+  <dt>Scan duration</dt>
+  <dd>{{(report.elapsed/60*100)//100}} min</dd>
+
+  <dt>Total number of hosts</dt>
+  <dd>{{report.hosts_total}}</dd>
+
+  <dt>Number of hosts detected as "up"</dt>
+  <dd>{{report.hosts_up}}</dd>
+
+  <dt>Number of hosts detected as "down"</dt>
+  <dd>{{report.hosts_down}}</dd>
+
+  <dt>Total number of open ports</dt>
+  <dd>{{report.total_open_ports}}</dd>
+
+{#  <dt>Port frequency chart</dt>
+  <dd></dd>
+
+  <dt>Port histogram chart</dt>
+  <dd></dd> #}
+</dl>
+{% endfor %}
+
+{% endblock %}

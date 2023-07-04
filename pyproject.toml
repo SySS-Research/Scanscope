@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.24.2", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "scanscope"
+dynamic = ["version"]
+authors = [
+    {name = "Adrian Vollmer", email = "adrian.vollmer@syss.de"},
+]
+description = "Visualize portscan results"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["pentest", "portscan", "nmap", "data-science", "visualization"]
+license = {text = "MIT License"}
+classifiers = [
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    'beautifulsoup4',
+    'bokeh>=3.2',
+    'lxml',
+    'joblib',
+    'numpy',
+    'pandas',
+    'python-libnmap',
+    'umap-learn',
+    'pyxdg',
+    'zundler',
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[project.scripts]
+scanscope = "scanscope.__main__:main"

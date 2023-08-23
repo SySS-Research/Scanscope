@@ -5,7 +5,7 @@ Visualize portscan results
 
 ![Screenshot](docs/screenshot.png)
 
-What the F?
+What the Eff?
 -----------
 
 In short: We interpret a host as a point in a vector space with 2\*\*32

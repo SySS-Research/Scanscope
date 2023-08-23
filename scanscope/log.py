@@ -53,14 +53,15 @@ class CustomFormatterDebug(CustomFormatter):
     FORMATS = color_map(_format)
 
 
-def init_logging(loglevel=logging.WARNING, logfile=None):
+def init_logging(loglevel=logging.INFO, logfile=None):
     # create logger
     logger = logging.getLogger()
     logger.setLevel(loglevel)
 
     # add success level
-    setattr(logger, 'success',
-            lambda message, *args: logger._log(logging.SUCCESS, message, args))
+    def success(self, message, *args, **kwargs):
+        self._log(logging.SUCCESS, message, args, **kwargs)
+    logging.Logger.success = success
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()

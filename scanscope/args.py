@@ -30,6 +30,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    '-f', '--format',
+    choices=['html', 'png', 'svg', 'json'],
+    default='html',
+    help="Output format (default: %(default)s)",
+)
+
+parser.add_argument(
     '-o', '--outputfile',
     default=None,
     help="Path to the output file (default: stdout)",
@@ -40,6 +47,26 @@ parser.add_argument(
     nargs='+',
     help="Input files",
 )
+
+params = parser.add_argument_group(
+    title="Data parameters",
+    description='These arguments influence the data processing')
+
+
+params.add_argument(
+    '--skip-post-deduplicate',
+    default=False,
+    action='store_true',
+    help="DO NOT deduplicate hosts after data reduction",
+    )
+
+
+params.add_argument(
+    '--pre-deduplicate',
+    default=False,
+    action='store_true',
+    help="Deduplicate hosts before data reduction",
+    )
 
 
 def parse_args(argv=None):

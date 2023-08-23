@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scanscope"
+version = "0.0.1"
+authors = [
+    {name = "Adrian Vollmer", email = "adrian.vollmer@syss.de"},
+]
+description = "Visualize portscan results"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["pentest", "portscan", "nmap", "data-science", "visualization"]
+license = {text = "MIT License"}
+classifiers = [
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    'umap-learn',
+    'datashader',
+    'bokeh',
+    'holoviews',
+    'scikit-image',
+    'colorcet',
+    'numpy',
+    'scipy',
+    'pandas',
+    'python-libnmap',
+]
+
+[tool.setuptools]
+packages = ["scanscope"]
+
+[project.scripts]
+scanscope = "scanscope.__main__:main"

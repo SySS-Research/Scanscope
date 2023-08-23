@@ -4,13 +4,52 @@ def main(argv=None):
     args = parse_args(argv=argv)
     init_logging(loglevel=args.log_level)
 
-    from scanscope.parser import parse_portscan
-    from scanscope.data import reduce
-    from scanscope.writer import write
+    disable_warnings()
 
-    portscan = parse_portscan(args.input)
-    data = reduce(portscan)
-    write(args.output, data)
+    run(args)
+
+
+def run(args):
+    import logging
+    log = logging.getLogger(__name__)
+    log.info("Starting up...")
+
+    from scanscope.writer import write_output
+
+    # For debugging, cache into pickle files:
+    #  try:
+    #      import pickle
+    #      import pandas
+    #      data = {'dataframe': pandas.read_pickle('data.pickle')}
+    #      data['fp_map'] = pickle.load(open('fpmap.pickle', 'rb'))
+    #  except Exception as e:
+    #      print(e)
+    #      import pickle
+    #      data = process(args)
+    #      pickle.dump({k: v for k, v in data['fp_map'].items()}, open('fpmap.pickle', 'wb'))
+
+    data = process(args)
+
+    write_output(data, args.outputfile, format=args.format)
+
+
+def process(args):
+    from scanscope.data import reduce
+    from scanscope.parser import read_input
+    portscan = read_input(args.input)
+    data = reduce(portscan,
+                  post_deduplicate=not args.skip_post_deduplicate,
+                  pre_deduplicate=args.pre_deduplicate,
+                  )
+    data['dataframe'].to_pickle(path='data.pickle')
+
+
+def disable_warnings():
+    from numba.core.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
+    import warnings
+
+    warnings.simplefilter('ignore', category=NumbaDeprecationWarning)
+    warnings.simplefilter('ignore', category=NumbaPendingDeprecationWarning)
 
 
 if __name__ == "__main__":

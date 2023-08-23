@@ -23,7 +23,7 @@
   overflow: hidden;
   position: relative;
   transition: max-height 0.2s ease-in-out;
-  max-height: 200px; /* Collapsed height, adjust as needed */
+  max-height: 120px; /* Collapsed height, adjust as needed */
 }
 
 .portconfig-container:before {

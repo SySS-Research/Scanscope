@@ -16,7 +16,7 @@ reduction technique named UMAP to project the data onto two dimensions.
 Each circle in the plot corresponds to one group of hosts. The size of the
 circle is related to the size of the group. Hosts with the same port
 configuration are grouped together. Similar groups should be close by. The
-colors mean nothing.
+colors mean nothing - except for gray: no open ports.
 
 Installation
 ------------

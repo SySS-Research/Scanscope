@@ -26,6 +26,7 @@ def run(args):
     #      print(e)
     #      import pickle
     #      data = process(args)
+    #      data['dataframe'].to_pickle(path='data.pickle')
     #      pickle.dump({k: v for k, v in data['fp_map'].items()}, open('fpmap.pickle', 'wb'))
 
     data = process(args)
@@ -41,7 +42,7 @@ def process(args):
                   post_deduplicate=not args.skip_post_deduplicate,
                   pre_deduplicate=args.pre_deduplicate,
                   )
-    data['dataframe'].to_pickle(path='data.pickle')
+    return data
 
 
 def disable_warnings():

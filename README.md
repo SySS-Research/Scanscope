@@ -22,3 +22,8 @@ Help
 ----
 
 Read `scanscope -h`
+
+Screenshot
+----------
+
+![Screenshot](docs/screenshot.png)

@@ -14,9 +14,8 @@ SCRIPT_PATH = os.path.abspath(os.path.dirname(__file__))
 def tooltip():
     result = """
     <div>
-        <div>
         <p>
-            <span style='font-size: 16px; color: #224499'>Hosts:</span>
+            <span style='font-size: 18px'>Hosts:</span>
             <span style='font-size: 18px'>@fp_count (0x@color_index)</span>
         </p>
         <p>
@@ -25,7 +24,7 @@ def tooltip():
         <p>
             <span style='font-size: 18px'>UDP: @udp_ports</span>
         </p>
-        </div>
+        <hr/>
     </div>
     """
     return result

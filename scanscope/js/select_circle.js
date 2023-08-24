@@ -1,7 +1,4 @@
-const inds = cb_obj.indices;
-const hostDetails = document.getElementById('hosts-details');
-hostDetails.innerHTML = '';
-
+// Helper functions
 const ToList = str => {
     const ul = document.createElement('ul');
     str.forEach(item => ul.innerHTML += `<li>${item}</li>`);
@@ -16,6 +13,77 @@ const sortIpList = ips => {
         return num1-num2;
     });
 }
+
+function unionOfDataElements(indices, data) {
+  // Create an empty Set to store the union of elements
+  let unionSet = new Set();
+
+  // Iterate over each index in the indices list
+  for (let i of indices) {
+    // Check if the index is within the valid range of the data list
+    if (i >= 0 && i < data.length) {
+      // Iterate over each element in the data[i] list
+      for (let element of data[i]) {
+        // Add the element to the unionSet
+        unionSet.add(element);
+      }
+    }
+  }
+
+  // Convert the Set back to an array and return
+  return Array.from(unionSet);
+}
+
+function intersectionOfDataElements(indices, data) {
+  // Check if there are any indices to intersect
+  if (indices.length === 0) {
+    return [];
+  }
+
+  // Create a map to store element frequencies
+  let elementFreqMap = new Map();
+
+  // Initialize the map with the elements from the first data list
+  for (let element of data[indices[0]]) {
+    elementFreqMap.set(element, 1);
+  }
+
+  // Update element frequencies based on the remaining data lists
+  for (let i = 1; i < indices.length; i++) {
+    let currentIndex = indices[i];
+
+    // Create a new map to track frequencies in the current data list
+    let currentFreqMap = new Map();
+    for (let element of data[currentIndex]) {
+      if (elementFreqMap.has(element)) {
+        currentFreqMap.set(element, (currentFreqMap.get(element) || 0) + 1);
+      }
+    }
+
+    // Update elementFreqMap with the intersection of the currentFreqMap
+    for (let [element, freq] of elementFreqMap) {
+      if (currentFreqMap.has(element)) {
+        elementFreqMap.set(element, Math.min(freq, currentFreqMap.get(element)));
+      } else {
+        elementFreqMap.delete(element);
+      }
+    }
+  }
+
+  // Create an array from the elementFreqMap keys
+  let intersectionArray = Array.from(elementFreqMap.keys());
+
+  return intersectionArray;
+}
+
+// Create sidebar with details of selected items
+
+const hostDetails = document.getElementById('hosts-details');
+
+const tcp_union = unionOfDataElements(datasource.selected.indices, datasource.data.tcp_ports).sort((a,b)=>(a-b));
+const tcp_intersection = intersectionOfDataElements(datasource.selected.indices, datasource.data.tcp_ports).sort((a,b)=>(a-b));
+
+hostDetails.innerHTML = `<div class="hosts-summary"><dl><dt>Union of TCP ports</dt><dd>${tcp_union}</dd><dt>Intersection of TCP ports</dt><dd>${tcp_intersection}</dd></dl></div>`;
 
 datasource.selected.indices.forEach( i => {
     const container = document.createElement('div');

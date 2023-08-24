@@ -11,13 +11,14 @@ const ToList = str => {
 datasource.selected.indices.forEach( i => {
     const container = document.createElement('div');
     const header = document.createElement('div');
-    const badges = document.createElement('div');
     const hosts_node = document.createElement('div');
     const portconfig_node = document.createElement('div');
     const tcp_node = document.createElement('div');
     const udp_node = document.createElement('div');
 
     const hosts = fp_map.get(datasource.data.fingerprint[i]);
+    const tcp_ports = datasource.data.tcp_ports[i];
+    const udp_ports = datasource.data.udp_ports[i];
 
     const color_index = datasource.data.color_index[i];
     var color = color_map.palette[color_map.factors.indexOf(color_index)];
@@ -25,22 +26,21 @@ datasource.selected.indices.forEach( i => {
     header.setAttribute('style', 'height: 10px; opacity: 60%; background-color: ' + color);
 
 
-    badges.classList.add('badges');
-    badges.innerHTML = '<div title="Hosts">' + hosts.length + '</div><div title="TCP-Ports">' + datasource.data.tcp_ports[i].length + '</div><div title="UDP-Ports">' + datasource.data.udp_ports[i].length + '</div>';
-
-    hosts_node.innerText = "Hosts: ";
+    hosts_node.innerText = `${hosts.length} hosts`;
     hosts_node.appendChild(ToList(hosts));
+    hosts_node.querySelector('ul').classList.add('collapsible-list');
+    hosts_node.querySelector('ul').classList.add('collapsed');
     hosts_node.classList.add('portconfig-hosts');
 
-    if (datasource.data.tcp_ports[i].length) {
-        tcp_node.innerHTML = "TCP-Ports: ";
-        tcp_node.appendChild(ToList(datasource.data.tcp_ports[i]));
+    if (tcp_ports.length) {
+        tcp_node.innerHTML = `<span class='list-title'>${tcp_ports.length} TCP ports</span>`;
+        tcp_node.appendChild(ToList(tcp_ports));
     }
-    if (datasource.data.udp_ports[i].length) {
-        udp_node.innerHTML = "UDP-Ports: ";
-        udp_node.appendChild(ToList(datasource.data.udp_ports[i]));
+    if (udp_ports.length) {
+        udp_node.innerHTML = `<span class='list-title'>${udp_ports.length} UDP ports</span>`;
+        udp_node.appendChild(ToList(udp_ports));
     }
-    if (!(datasource.data.tcp_ports[i].length+datasource.data.udp_ports[i].length)) {
+    if (!(tcp_ports.length+udp_ports.length)) {
         tcp_node.innerHTML = 'No open ports';
     }
 
@@ -52,10 +52,27 @@ datasource.selected.indices.forEach( i => {
     portconfig_node.classList.add('portconfig');
 
     container.appendChild(header);
-    container.appendChild(badges);
     container.appendChild(portconfig_node);
     container.appendChild(hosts_node);
     container.classList.add('portconfig-container');
 
     hostDetails.appendChild(container);
+
+});
+
+function toggleCollapse(e) {
+    const list = e.target.closest('ul');
+    list.classList.toggle("collapsed");
+    list.querySelector("a").textContent = list.classList.contains("collapsed") ? "Show more items" : "Show fewer items";
+}
+
+// Add "show more items" link
+const lists = document.querySelectorAll(".collapsible-list");
+lists.forEach(list => {
+    const items = list.querySelectorAll("li");
+    const moreItemsLink = document.createElement("li");
+    moreItemsLink.className = "more-items";
+    moreItemsLink.innerHTML = '<a href="#">Show more items</a>';
+    moreItemsLink.addEventListener("click", toggleCollapse);
+    if (list.children.length > 5) { list.prepend(moreItemsLink); }
 });

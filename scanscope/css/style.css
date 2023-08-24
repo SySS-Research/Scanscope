@@ -1,72 +1,68 @@
-  body {
+body {
     display: flex;
     padding: 20px;
     font-family: sans-serif;
-  }
+}
 
-  #bokeh-plot {
+#bokeh-plot {
     padding: 20px;
     box-sizing: border-box;
-  }
+}
 
-  #hosts-details {
+#hosts-details {
     width: auto;
     padding-left: 20px;
     box-sizing: border-box;
-  }
+}
 
 
 .portconfig-container {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  position: relative;
-  transition: max-height 0.2s ease-in-out;
-  max-height: 120px; /* Collapsed height, adjust as needed */
-}
-
-.portconfig-container:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 10%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.portconfig-container:hover {
-  max-height: 100%; /* Adjust this value to control the expansion height */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
 }
 
 .portconfig {
-  padding: 10px;
+    padding: 10px;
+}
+
+.portconfig-proto > ul li {
+    display: inline;
+    word-wrap: break-word;
+    padding: 3px;
+}
+.portconfig-proto > ul {
+    width: 100%;
+}
+.portconfig-proto > li {
+    width: 100%;
+}
+
+.portconfig-proto > li::before {
+    content: '•';
+    margin-right: 1ch;
 }
 
 .portconfig-hosts {
-  padding: 10px;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.2s ease-in-out, max-height 0.2s ease-in-out;
-  font-family: monospace, serif;
+    padding: 10px;
+    overflow: hidden;
+    font-family: monospace, serif;
 }
 
-.portconfig-container:hover .portconfig-hosts {
-  opacity: 1;
-  max-height: 100%; /* Adjust this value to control the expansion height */
+.collapsible-list.collapsed li {
+  display: none;
 }
 
-.portconfig-container:hover:before {
-      opacity: 0; /* Hide the gradient on expanded cards */
+.collapsible-list li:nth-child(-n+5) {
+  display: list-item;
 }
 
-div.badges {
-  position: absolute;
-  top: 10px;
-  right: 0;
-  text-align: right;
+.collapsible-list li.more-items {
+  display: block;
+}
+
+.collapsible-list.collapsed .more-items {
+  display: block;
 }

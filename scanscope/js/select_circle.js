@@ -8,6 +8,15 @@ const ToList = str => {
     return ul;
 };
 
+const sortIpList = ips => {
+    // TODO consider IPv6
+    return ips.sort((a,b) => {
+        const num1 = Number(a.split(".").map((num) => (`000${num}`).slice(-3) ).join(""));
+        const num2 = Number(b.split(".").map((num) => (`000${num}`).slice(-3) ).join(""));
+        return num1-num2;
+    });
+}
+
 datasource.selected.indices.forEach( i => {
     const container = document.createElement('div');
     const header = document.createElement('div');
@@ -16,7 +25,7 @@ datasource.selected.indices.forEach( i => {
     const tcp_node = document.createElement('div');
     const udp_node = document.createElement('div');
 
-    const hosts = fp_map.get(datasource.data.fingerprint[i]);
+    const hosts = sortIpList(fp_map.get(datasource.data.fingerprint[i]));
     const tcp_ports = datasource.data.tcp_ports[i];
     const udp_ports = datasource.data.udp_ports[i];
 

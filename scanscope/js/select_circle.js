@@ -141,6 +141,7 @@ function toggleCollapse(e) {
     const list = e.target.closest('ul');
     list.classList.toggle("collapsed");
     list.querySelector("a").textContent = list.classList.contains("collapsed") ? "Show more items" : "Show fewer items";
+    e.preventDefault();
 }
 
 // Add "show more items" link

@@ -35,9 +35,15 @@ def run(args):
 
 
 def process(args):
+    import logging
     from scanscope.data import reduce
     from scanscope.parser import read_input
+
+    log = logging.getLogger(__name__)
     portscan = read_input(args.input)
+    if not portscan:
+        log.error("No ports found")
+        exit(1)
     data = reduce(portscan,
                   post_deduplicate=not args.skip_post_deduplicate,
                   pre_deduplicate=args.pre_deduplicate,

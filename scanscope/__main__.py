@@ -47,6 +47,7 @@ def process(args):
     data = reduce(portscan,
                   post_deduplicate=not args.skip_post_deduplicate,
                   pre_deduplicate=args.pre_deduplicate,
+                  remove_empty=args.remove_empty_host_group,
                   )
     return data
 

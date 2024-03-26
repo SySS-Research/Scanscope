@@ -37,6 +37,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    '-E', '--remove-empty-host-group',
+    default=False,
+    action="store_true",
+    help="Remove the group of hosts without open ports",
+)
+
+parser.add_argument(
     '-o', '--outputfile',
     default=None,
     help="Path to the output file (default: stdout)",

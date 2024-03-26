@@ -44,7 +44,7 @@ def transform_data(data, deduplicate=True):
     return df, fp_count, fp_map
 
 
-def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, **kwargs):
+def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, remove_empty=False, **kwargs):
     # Extract kwargs that don't get passed to UMAP()
     if pre_deduplicate and post_deduplicate:
         raise ValueError(
@@ -88,6 +88,8 @@ def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, **kwargs):
         # TODO add IPs
 
     df['color_index'] = list(x[:2] if x is not None else 'xx' for x in df['fingerprint'])
+    if remove_empty:
+        df = df[df.fingerprint.notnull()]
 
     result = {
         "dataframe": df,

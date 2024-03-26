@@ -25,7 +25,7 @@ classifiers = [
 dependencies = [
     'umap-learn',
     'datashader',
-    'bokeh',
+    'bokeh>=3.2',
     'holoviews',
     'scikit-image',
     'colorcet',

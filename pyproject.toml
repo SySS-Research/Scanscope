@@ -23,16 +23,13 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
 ]
 dependencies = [
-    'umap-learn',
-    'datashader',
+    'beautifulsoup4',
     'bokeh>=3.2',
-    'holoviews',
-    'scikit-image',
-    'colorcet',
     'numpy',
-    'scipy',
     'pandas',
     'python-libnmap',
+    'umap-learn',
+    'pyxdg'
 ]
 
 [tool.setuptools]

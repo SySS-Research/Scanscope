@@ -9,7 +9,7 @@ reset = "\x1b[0m"
 
 # add success level
 logging.SUCCESS = 25  # between WARNING and INFO
-logging.addLevelName(logging.SUCCESS, 'SUCCESS')
+logging.addLevelName(logging.SUCCESS, "SUCCESS")
 
 
 def color_map(_format):
@@ -29,10 +29,10 @@ class CustomFormatter(logging.Formatter):
 
     fields = [
         #  '%(asctime)s',
-        '%(levelname)s',
-        '%(message)s'
+        "%(levelname)s",
+        "%(message)s",
     ]
-    _format = ' - '.join(fields)
+    _format = " - ".join(fields)
 
     FORMATS = color_map(_format)
 
@@ -43,13 +43,8 @@ class CustomFormatter(logging.Formatter):
 
 
 class CustomFormatterDebug(CustomFormatter):
-    fields = [
-        '%(asctime)s',
-        '%(filename)s:%(lineno)d',
-        '%(levelname)s',
-        '%(message)s'
-    ]
-    _format = ' - '.join(fields)
+    fields = ["%(asctime)s", "%(filename)s:%(lineno)d", "%(levelname)s", "%(message)s"]
+    _format = " - ".join(fields)
     FORMATS = color_map(_format)
 
 
@@ -61,6 +56,7 @@ def init_logging(loglevel=logging.INFO, logfile=None):
     # add success level
     def success(self, message, *args, **kwargs):
         self._log(logging.SUCCESS, message, args, **kwargs)
+
     logging.Logger.success = success
 
     # create console handler with a higher log level
@@ -68,7 +64,7 @@ def init_logging(loglevel=logging.INFO, logfile=None):
     ch.setLevel(loglevel)
 
     # create formatter and add it to the handlers
-    if loglevel in ['DEBUG', logging.DEBUG]:
+    if loglevel in ["DEBUG", logging.DEBUG]:
         formatter = CustomFormatterDebug()
     else:
         formatter = CustomFormatter()

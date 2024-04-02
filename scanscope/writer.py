@@ -11,20 +11,21 @@ class NumpyArrayEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def write_output(data, outputfile, format='html'):
+def write_output(data, outputfile, format="html"):
     if outputfile:
-        fp = open(outputfile, 'wb')
+        fp = open(outputfile, "wb")
     else:
         fp = sys.stdout.buffer
 
-    if format == 'json':
-        fp.write(data['dataframe'].to_json().encode())
-    elif format == 'png':
+    if format == "json":
+        fp.write(data["dataframe"].to_json().encode())
+    elif format == "png":
         write_png(fp, data)
-    elif format == 'svg':
+    elif format == "svg":
         raise NotImplementedError("SVG not yet implemented")
-    elif format == 'html':
+    elif format == "html":
         from scanscope import html
+
         html.reduce_and_plot(data, outputfile)
 
 

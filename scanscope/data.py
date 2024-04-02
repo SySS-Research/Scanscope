@@ -27,12 +27,12 @@ def transform_data(data, deduplicate=True):
 
     for i, (host, props) in enumerate(data.items()):
         row = {}
-        for p in props['tcp_ports']:
+        for p in props["tcp_ports"]:
             row[p] = 1
-        for p in props['udp_ports']:
+        for p in props["udp_ports"]:
             row[2**16 + p] = 1
 
-        fp = props['fingerprint']
+        fp = props["fingerprint"]
         fp_map[fp].append(host)
         if fp_count[fp] == 0 or not deduplicate:
             data_.append(row)
@@ -44,13 +44,19 @@ def transform_data(data, deduplicate=True):
     return df, fp_count, fp_map
 
 
-def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, remove_empty=False, **kwargs):
+def reduce(
+    portscan,
+    pre_deduplicate=False,
+    post_deduplicate=False,
+    remove_empty=False,
+    **kwargs,
+):
     # Extract kwargs that don't get passed to UMAP()
     if pre_deduplicate and post_deduplicate:
         raise ValueError(
             "'pre_deduplicate' and 'post_deduplicate' must not both be true"
-            )
-    for k in ['pre_deduplicate', 'post_deduplicate']:
+        )
+    for k in ["pre_deduplicate", "post_deduplicate"]:
         kwargs.pop(k, None)
 
     # Perform dimensionality reduction
@@ -61,33 +67,35 @@ def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, remove_empty
 
     log.info("Reduce...")
     embedding = reducer.fit_transform(data)
-    df = pd.DataFrame(embedding, columns=('x', 'y'))
+    df = pd.DataFrame(embedding, columns=("x", "y"))
 
     # Add supplemental data to the dataframe
     if pre_deduplicate:
-        df['fingerprint'] = list(fp_map.keys())
-        df['fp_count'] = list(fp_count.values())
-        df['tcp_ports'] = [portscan[x[0]]['tcp_ports'] for x in fp_map.values()]
-        df['udp_ports'] = [portscan[x[0]]['udp_ports'] for x in fp_map.values()]
+        df["fingerprint"] = list(fp_map.keys())
+        df["fp_count"] = list(fp_count.values())
+        df["tcp_ports"] = [portscan[x[0]]["tcp_ports"] for x in fp_map.values()]
+        df["udp_ports"] = [portscan[x[0]]["udp_ports"] for x in fp_map.values()]
     else:
-        df['fingerprint'] = list(x['fingerprint'] for x in portscan.values())
-        df['fp_count'] = list(fp_count[x['fingerprint']] for x in portscan.values())
-        df['tcp_ports'] = [x['tcp_ports'] for x in portscan.values()]
-        df['udp_ports'] = [x['udp_ports'] for x in portscan.values()]
+        df["fingerprint"] = list(x["fingerprint"] for x in portscan.values())
+        df["fp_count"] = list(fp_count[x["fingerprint"]] for x in portscan.values())
+        df["tcp_ports"] = [x["tcp_ports"] for x in portscan.values()]
+        df["udp_ports"] = [x["udp_ports"] for x in portscan.values()]
 
     if post_deduplicate:
-        x = df.groupby(['fingerprint'], dropna=False, sort=False)['x']
-        x = x.mean().reset_index()['x']
+        x = df.groupby(["fingerprint"], dropna=False, sort=False)["x"]
+        x = x.mean().reset_index()["x"]
 
-        y = df.groupby(['fingerprint'], dropna=False, sort=False)['y']
-        y = y.mean().reset_index()['y']
+        y = df.groupby(["fingerprint"], dropna=False, sort=False)["y"]
+        y = y.mean().reset_index()["y"]
 
-        df.drop_duplicates(subset='fingerprint', inplace=True)
-        df['x'] = x.values
-        df['y'] = y.values
+        df.drop_duplicates(subset="fingerprint", inplace=True)
+        df["x"] = x.values
+        df["y"] = y.values
         # TODO add IPs
 
-    df['color_index'] = list(x[:2] if x is not None else 'xx' for x in df['fingerprint'])
+    df["color_index"] = list(
+        x[:2] if x is not None else "xx" for x in df["fingerprint"]
+    )
     if remove_empty:
         df = df[df.fingerprint.notnull()]
 
@@ -95,7 +103,7 @@ def reduce(portscan, pre_deduplicate=False, post_deduplicate=False, remove_empty
         "dataframe": df,
         "portscan": portscan,
         "fp_map": fp_map,
-        }
+    }
 
     return result
 

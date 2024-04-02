@@ -60,7 +60,7 @@ def reduce(
         kwargs.pop(k, None)
 
     # Perform dimensionality reduction
-    reducer = umap.UMAP(random_state=0, **kwargs)
+    reducer = umap.UMAP(**kwargs)
 
     log.info("Transforming data...")
     data, fp_count, fp_map = transform_data(portscan, deduplicate=pre_deduplicate)

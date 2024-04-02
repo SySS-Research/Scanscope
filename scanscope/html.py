@@ -90,7 +90,7 @@ def plot(data, filename, circle_scale=1, title=None, **kwargs):
 
     circle_args["size"] = "size"
 
-    plot_figure.circle(
+    plot_figure.scatter(
         "x",
         "y",
         **circle_args,

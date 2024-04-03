@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Hosts</h3>
+<script>
+const scanscope = {};
+
+async function initDb() {
+    const initSqlJs = window.initSqlJs;
+    const sqlPromise = initSqlJs({
+        locateFile: file => `${file}`
+    });
+    const dataPromise = fetch("data.sqlite").then(res => res.arrayBuffer());
+    const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
+    const db = new SQL.Database(new Uint8Array(buf));
+    scanscope.db = db;
+}
+
+function getHosts() {
+    if (!scanscope.db) { console.error("Scanscope DB not ready"); return };
+    const result = scanscope.db.exec("SELECT * FROM hosts LIMIT 25");
+    console.log(result);
+    return result;
+}
+
+window.addEventListener("load", initDb);
+</script>
+{% endblock %}

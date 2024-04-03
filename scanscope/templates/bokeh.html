@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% from macros import embed %}
+
+{% block content %}
+<div id="bokeh-div">
+  {%      for doc in docs %}
+  {{        embed(doc) if doc.elementid }}
+  {%-       for root in doc.roots %}
+  {{            embed(root) }}
+  {%        endfor %}
+  {%      endfor %}
+  {{ plot_script }}
+</div>
+<div id="hosts-details">
+</div>
+{% endblock %}

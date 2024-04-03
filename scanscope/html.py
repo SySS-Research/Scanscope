@@ -7,6 +7,7 @@ import jinja2
 
 from bokeh.plotting import figure
 from bokeh.embed import file_html
+from bokeh.themes import built_in_themes
 from bokeh.models import (
     HoverTool,
     ColumnDataSource,
@@ -16,10 +17,19 @@ from bokeh.models import (
     #  Select,
 )
 from bokeh import palettes
+
 #  from bokeh.layouts import column
 #  from bokeh.models import ColorBar, LogTicker
 
 SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
+
+
+def reduce_and_plot(
+    data, filename, circle_scale=1, title="", post_deduplicate=True, **kwargs
+):
+    if not post_deduplicate:
+        circle_scale /= 10
+    plot(data, filename, circle_scale=7 * circle_scale, title=title, **kwargs)
 
 
 def tooltip():
@@ -129,30 +139,38 @@ def write_html(plot_figure, title, data, output_dir="."):
     os.makedirs(output_dir, exist_ok=True)
     js_files = []
     css_files = []
-    loader = jinja2.FileSystemLoader(SCRIPT_PATH / "assets" / "templates")
+    loader = jinja2.ChoiceLoader([
+        jinja2.PackageLoader("scanscope", "templates"),
+        jinja2.PackageLoader("bokeh.core", "_templates"),
+    ])
     scanscope_env = jinja2.Environment(loader=loader)
 
-    static_path = SCRIPT_PATH / "assets" / "static"
+    static_path = SCRIPT_PATH / "static"
 
     for file in os.listdir(static_path):
         src = static_path / file
         shutil.copyfile(src, Path(output_dir) / file)
-        if file.endswith('.js'):
+        if file.endswith(".js"):
             js_files.append(file)
-        if file.endswith('.css'):
+        if file.endswith(".css"):
             css_files.append(file)
 
-    for page in ["index.html", "info.html"]:
+    context = dict(
+        css_files=css_files, js_files=js_files, theme="dark", sidebar=get_sidebar()
+    )
+
+    for page in ["index.html", "hosts.html", "info.html"]:
         template = scanscope_env.get_template(page)
-        html = template.render(css_files=css_files, js_files=js_files)
+        html = template.render(**context)
         open(Path(output_dir) / page, "w").write(html)
 
-    template = get_bokeh_template(scanscope_env, css_files, js_files)
     html = file_html(
         #  column(stat_select, plot_figure),
         plot_figure,
         title=title,
-        template=template,
+        template=scanscope_env.get_template("bokeh.html"),
+        template_variables=context,
+        theme=built_in_themes["dark_minimal"] if context["theme"] == "dark" else None,
     )
 
     open(Path(output_dir) / "diagram.html", "w").write(html)
@@ -162,72 +180,32 @@ def write_html(plot_figure, title, data, output_dir="."):
     # TODO bundle and write to 'filename'
 
 
-def get_bokeh_template(scanscope_env, css_files, js_files):
-    from bokeh.core.templates import get_env, JS_RESOURCES, CSS_RESOURCES
-    from bs4 import BeautifulSoup
-
-    bokeh_env = get_env()
-    css_resources = CSS_RESOURCES.render(
-        css_files=css_files,
-    )
-    js_resources = JS_RESOURCES.render(
-        js_files=js_files,
-    )
-
-    bokeh_code = scanscope_env.get_template("bokeh.html").render()
-    bokeh_soup = BeautifulSoup(bokeh_code, "lxml")
-    bokeh_body = bokeh_soup.body.decode_contents()
-    pre_bokeh_div, post_bokeh_div = str(bokeh_body).split("@@@BOKEH_DIV@@@")
-
-    template = bokeh_env.from_string(
-        """
-    {% extends "file.html" %}
-    {% block css_resources %}
-        """
-        + css_resources
-        + """
-    {% endblock %}
-    {% block js_resources %}
-        """
-        + js_resources
-        + """
-    {% endblock %}
-    {% block inner_body scoped %}
-        """
-        + pre_bokeh_div
-        + """ {{ super() }} """
-        + post_bokeh_div
-        + """
-    {% endblock %}
-    """
-    )
-
-    return template
-
-
 def write_sqlite(data, output_dir):
     from . import sql
+
     file_path = Path(output_dir) / "data.sqlite"
-    con = sql.create_connection(file_path)
+    conn = sql.create_connection(file_path)
 
-    sql.create_table(con)
+    sql.create_table(conn)
 
-    for host in data["hosts"]:
-        host_data = ('192.168.1.1', 'example_host')
-        host_id = sql.insert_host(con, host_data)
+    for host in range(30):
+        host_data = ("192.168.1.1", str(host), "example_host")
+        host_id = sql.insert_host(conn, host_data)
 
         port_data = [
-            (host_id, 80, 'http'),
-            (host_id, 443, 'https'),
-            (host_id, -53, 'dns')
+            (host_id, 80, "http"),
+            (host_id, 443, "https"),
+            (host_id, -53, "dns"),
         ]
         for port in port_data:
-            sql.insert_port(con, port)
+            sql.insert_port(conn, port)
 
 
-def reduce_and_plot(
-    data, filename, circle_scale=1, title="", post_deduplicate=True, **kwargs
-):
-    if not post_deduplicate:
-        circle_scale /= 10
-    plot(data, filename, circle_scale=7 * circle_scale, title=title, **kwargs)
+def get_sidebar():
+    result = [
+        {"title": "Hosts", "link": "hosts.html"},
+        {"title": "Services", "link": "services.html"},
+        {"title": "Diagram", "link": "diagram.html"},
+        {"title": "Info", "link": "info.html"},
+        ]
+    return result

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="{{theme}}">
 <head>
+    <link rel="icon" href="data:,">
+    {{- bokeh_css if bokeh_css }}
+    {{  bokeh_js if bokeh_js }}
 {% for file in js_files %}
     <script type="text/javascript" src="{{ file }}"></script>
 {% endfor %}

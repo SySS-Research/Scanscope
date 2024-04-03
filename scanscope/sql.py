@@ -4,7 +4,10 @@ import os
 
 def create_connection(db_file):
     """Create a database connection to the SQLite database specified by db_file"""
-    os.unlink(db_file)
+    try:
+        os.unlink(db_file)
+    except FileNotFoundError:
+        pass
     conn = sqlite3.connect(db_file)
     return conn
 
@@ -14,6 +17,7 @@ def create_table(conn):
     sql_create_hosts_table = """ CREATE TABLE IF NOT EXISTS hosts (
                                         id integer PRIMARY KEY,
                                         ip_address text NOT NULL,
+                                        fingerprint text NOT NULL,
                                         hostname text
                                     ); """
 
@@ -37,8 +41,8 @@ def insert_host(conn, host):
     :param host: A tuple (ip_address, hostname)
     :return: host id
     """
-    sql = ''' INSERT INTO hosts(ip_address, hostname)
-              VALUES(?,?) '''
+    sql = ''' INSERT INTO hosts(ip_address, fingerprint, hostname)
+              VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, host)
     conn.commit()
@@ -49,10 +53,10 @@ def insert_port(conn, port):
     """
     Insert a new port into the ports table
     :param conn: Connection object
-    :param port: A tuple (host_id, port_number, port_type, service_name)
+    :param port: A tuple (host_id, port_number, service_name)
     """
-    sql = ''' INSERT INTO ports(host_id, port_number, port_type, service_name)
-              VALUES(?,?,?,?) '''
+    sql = ''' INSERT INTO ports(host_id, port_number, service_name)
+              VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, port)
     conn.commit()

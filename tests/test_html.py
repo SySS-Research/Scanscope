@@ -13,14 +13,12 @@ def test_write_html():
     plot_figure = figure()
 
     with TemporaryDirectory(prefix="scanscope_pytest_") as tmpdir:
-        write_html(plot_figure, "TestTitle", tmpdir)
+        write_html(plot_figure, "TestTitle", [], tmpdir)
 
         files = os.listdir(tmpdir)
-        assert "index.html" in files
-        assert "diagram.html" in files
-        assert "info.html" in files
 
-        for file in ["diagram", "index", "info"]:
+        for file in ["diagram", "index", "hosts", "info"]:
+            assert f"{file}.html" in files
             html = open(Path(tmpdir) / f"{file}.html", "r").read()
             assert 'bootstrap.bundle.min.js' in html
             assert 'bootstrap.min.css' in html

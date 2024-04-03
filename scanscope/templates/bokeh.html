@@ -2,7 +2,14 @@
 
 {% from macros import embed %}
 
+{% block head %}
+<script type="text/javascript" src="sql-wasm.min.js"></script>
+<script type="text/javascript" src="bokeh-aux.js"></script>
+<link href="bokeh-aux.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
+
 <div id="bokeh-div">
   {%      for doc in docs %}
   {{        embed(doc) if doc.elementid }}
@@ -14,4 +21,16 @@
 </div>
 <div id="hosts-details">
 </div>
+
+<template id="template-popup">
+<div class="bokeh-popup">
+</div>
+</template>
+
+<template id="template-popup-host">
+<div class="bokeh-popup-host">
+    <span class="group-size"></span> hosts: <span class="tcp-ports"></span><span class="udp-ports"></span>
+</div>
+</template>
+
 {% endblock %}

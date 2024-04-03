@@ -1,0 +1,8 @@
+div.bokeh-popup{
+    position: absolute;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    color: black;
+    z-index: 1000;
+}

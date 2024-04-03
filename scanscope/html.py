@@ -29,29 +29,22 @@ def reduce_and_plot(
 ):
     if not post_deduplicate:
         circle_scale /= 10
-    plot(data, filename, circle_scale=7 * circle_scale, title=title, **kwargs)
+    plot = get_bokeh_plot(
+        data, filename, circle_scale=7 * circle_scale, title=title, **kwargs
+    )
+
+    write_output(data, plot, title)
 
 
-def tooltip():
-    result = """
-    <div>
-        <p>
-            <span style='font-size: 18px'>Hosts:</span>
-            <span style='font-size: 18px'>@fp_count (0x@color_index)</span>
-        </p>
-        <p>
-            <span style='font-size: 18px'>TCP: @tcp_ports</span>
-        </p>
-        <p>
-            <span style='font-size: 18px'>UDP: @udp_ports</span>
-        </p>
-        <hr/>
-    </div>
-    """
-    return result
+def write_output(data, plot, title):
+    output_dir = "/tmp/scanscope"
+    os.makedirs(output_dir, exist_ok=True)
+    write_html(plot, title, output_dir)
+    write_sqlite(data, output_dir)
+    # TODO bundle and write to 'filename'
 
 
-def plot(data, filename, circle_scale=1, title=None, **kwargs):
+def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
     df = data["dataframe"]
     color_field = "color_index"
     df["size"] = list(4 + math.sqrt(1 + x) * circle_scale for x in df["fp_count"])
@@ -60,11 +53,6 @@ def plot(data, filename, circle_scale=1, title=None, **kwargs):
     color_mapping = CategoricalColorMapper(
         factors=["%02x" % x for x in range(256)], palette=palettes.Turbo256
     )
-
-    if title:
-        title = "Portscan - %s" % title
-    else:
-        title = "Portscan"
 
     plot_figure = figure(
         title=title,
@@ -82,71 +70,49 @@ def plot(data, filename, circle_scale=1, title=None, **kwargs):
     #                       label_standoff=12, border_line_color=None, location=(0, 0))
     #  plot_figure.add_layout(color_bar, 'right')
 
-    plot_figure.add_tools(HoverTool(tooltips=tooltip()))
-
-    #  tooltips = [tooltip()]
-
-    #  callback_hover = CustomJS(
-    #      args=dict(tt=plot_figure.hover, opts=tooltips), code="""
-    #      if (cb_obj.value=='Stat Set 1') {
-    #          tt[0].tooltips=opts[0]
-    #      } else {
-    #          tt[0].tooltips=opts[1]
-    #      }
-    #  """)
+    hover = HoverTool(tooltips=None)
+    callback = CustomJS(args={}, code="hostGroupHover(cb_data)")
+    hover.callback = callback
+    plot_figure.add_tools(hover)
 
     circle_args = dict(
         source=datasource,
         color=dict(field=color_field, transform=color_mapping),
         line_alpha=0.6,
         fill_alpha=0.4,
+        size="size",
     )
 
-    circle_args["size"] = "size"
+    plot_figure.scatter("x", "y", **circle_args)
 
-    plot_figure.scatter(
-        "x",
-        "y",
-        **circle_args,
-    )
-
-    # make a custom javascript callback that exports the indices of the
-    # selected points to the Jupyter notebook
-
-    select_circle_js = SCRIPT_PATH / "js" / "select_circle.js"
-    select_circle_js = open(select_circle_js, "r").read()
     callback_click = CustomJS(
         args=dict(
-            datasource=datasource, fp_map=data["fp_map"], color_map=color_mapping
+            opts=dict(
+                datasource=datasource, fp_map=data["fp_map"], color_map=color_mapping
+            )
         ),
-        code=select_circle_js,
+        code="hostGroupClick(opts)",
     )
 
     # set the callback to run when a selection geometry event occurs in the figure
     plot_figure.js_on_event("selectiongeometry", callback_click)
 
-    #  stat_select = Select(
-    #      options=["Stat Set 1", "Stat Set 2"],
-    #      value="Stat Set 1",
-    #      title="Show port numbers",
-    #      #  callback=callback_hover,
-    #  )
-
-    write_html(plot_figure, title, data)
+    return plot_figure
 
 
-def write_html(plot_figure, title, data, output_dir="."):
-    os.makedirs(output_dir, exist_ok=True)
+def write_html(plot_figure, title, output_dir):
     js_files = []
     css_files = []
-    loader = jinja2.ChoiceLoader([
-        jinja2.PackageLoader("scanscope", "templates"),
-        jinja2.PackageLoader("bokeh.core", "_templates"),
-    ])
+    loader = jinja2.ChoiceLoader(
+        [
+            jinja2.PackageLoader("scanscope", "templates"),
+            jinja2.PackageLoader("bokeh.core", "_templates"),
+        ]
+    )
     scanscope_env = jinja2.Environment(loader=loader)
 
-    static_path = SCRIPT_PATH / "static"
-
+    # Copy and auto-include common files
+    static_path = SCRIPT_PATH / "static" / "common"
     for file in os.listdir(static_path):
         src = static_path / file
         shutil.copyfile(src, Path(output_dir) / file)
@@ -155,15 +121,23 @@ def write_html(plot_figure, title, data, output_dir="."):
         if file.endswith(".css"):
             css_files.append(file)
 
+    # Copy optional files only
+    static_path = SCRIPT_PATH / "static" / "opt"
+    for file in os.listdir(static_path):
+        src = static_path / file
+        shutil.copyfile(src, Path(output_dir) / file)
+
+    # Render templates
     context = dict(
         css_files=css_files, js_files=js_files, theme="dark", sidebar=get_sidebar()
     )
 
-    for page in ["index.html", "hosts.html", "info.html"]:
+    for page in ["index.html", "hosts.html", "services.html", "info.html"]:
         template = scanscope_env.get_template(page)
         html = template.render(**context)
         open(Path(output_dir) / page, "w").write(html)
 
+    # Bokeh template is treated differently
     html = file_html(
         #  column(stat_select, plot_figure),
         plot_figure,
@@ -174,10 +148,6 @@ def write_html(plot_figure, title, data, output_dir="."):
     )
 
     open(Path(output_dir) / "diagram.html", "w").write(html)
-
-    write_sqlite(data, output_dir)
-
-    # TODO bundle and write to 'filename'
 
 
 def write_sqlite(data, output_dir):
@@ -207,5 +177,5 @@ def get_sidebar():
         {"title": "Services", "link": "services.html"},
         {"title": "Diagram", "link": "diagram.html"},
         {"title": "Info", "link": "info.html"},
-        ]
+    ]
     return result

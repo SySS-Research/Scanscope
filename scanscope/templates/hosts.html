@@ -1,27 +1,14 @@
 {% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="sql-wasm.min.js"></script>
+<script type="text/javascript" src="sql-aux.js"></script>
+<script type="text/javascript" src="hosts-aux.js"></script>
+<link rel="stylesheet" href="table.css" type="text/css" />
+{% endblock %}
+
 {% block content %}
 <h3>Hosts</h3>
-<script>
-const scanscope = {};
 
-async function initDb() {
-    const initSqlJs = window.initSqlJs;
-    const sqlPromise = initSqlJs({
-        locateFile: file => `${file}`
-    });
-    const dataPromise = fetch("data.sqlite").then(res => res.arrayBuffer());
-    const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
-    const db = new SQL.Database(new Uint8Array(buf));
-    scanscope.db = db;
-}
-
-function getHosts() {
-    if (!scanscope.db) { console.error("Scanscope DB not ready"); return };
-    const result = scanscope.db.exec("SELECT * FROM hosts LIMIT 25");
-    console.log(result);
-    return result;
-}
-
-window.addEventListener("load", initDb);
-</script>
+<div id="hosts-table" class="table"></div>
 {% endblock %}

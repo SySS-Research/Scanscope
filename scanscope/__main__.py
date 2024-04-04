@@ -16,22 +16,8 @@ def run(args):
 
     from scanscope.writer import write_output
 
-    # For debugging, cache into pickle files:
-    #  try:
-    #      import pickle
-    #      import pandas
-    #      data = {'dataframe': pandas.read_pickle('data.pickle')}
-    #      data['fp_map'] = pickle.load(open('fpmap.pickle', 'rb'))
-    #  except Exception as e:
-    #      print(e)
-    #      import pickle
-    #      data = process(args)
-    #      data['dataframe'].to_pickle(path='data.pickle')
-    #      pickle.dump({k: v for k, v in data['fp_map'].items()}, open('fpmap.pickle', 'wb'))
-
     data = process(args)
-
-    write_output(data, args.outputfile, format=args.format)
+    write_output(data, args.output_path, format=args.format)
 
 
 def process(args):

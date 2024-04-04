@@ -11,20 +11,23 @@ class NumpyArrayEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def write_output(data, outputfile, format="html"):
-    if outputfile:
-        fp = open(outputfile, "wb")
-    else:
-        fp = sys.stdout.buffer
-
+def write_output(data, output_path, format="html"):
     if format == "json":
+        if output_path:
+            fp = open(output_path, "wb")
+        else:
+            fp = sys.stdout.buffer
         fp.write(data["dataframe"].to_json().encode())
-    elif format == "png":
-        raise NotImplementedError("PNG not yet implemented")
-    elif format == "svg":
-        raise NotImplementedError("SVG not yet implemented")
-    elif format == "html":
-        from scanscope import html, write_output
+    else:
+        from scanscope import html
+        plot = html.get_bokeh_plot(data)
 
-        plot = html.get_bokeh_plot(data, outputfile)
-        write_output(data, plot, "", "/tmp/scanscope")
+        if format == "png":
+            raise NotImplementedError("PNG not yet implemented")
+        elif format == "svg":
+            raise NotImplementedError("SVG not yet implemented")
+        elif format == "html-directory":
+            from scanscope.html import write_output
+            write_output(data, plot, "", output_path)
+        elif format == "html":
+            raise NotImplementedError("Single HTML not yet implemented")

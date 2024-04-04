@@ -36,8 +36,8 @@ parser.add_argument(
 parser.add_argument(
     "-f",
     "--format",
-    choices=["html", "png", "svg", "json"],
-    default="html",
+    choices=["html-directory", "html", "png", "svg", "json"],
+    default="html-directory",
     help="Output format (default: %(default)s)",
 )
 
@@ -51,9 +51,9 @@ parser.add_argument(
 
 parser.add_argument(
     "-o",
-    "--outputfile",
+    "--output-path",
     default=None,
-    help="Path to the output file (default: stdout)",
+    help="Path to the output file/directory (default: stdout)",
 )
 
 parser.add_argument(

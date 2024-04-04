@@ -17,7 +17,7 @@ def create_table(conn):
     sql_create_hosts_table = """ CREATE TABLE IF NOT EXISTS hosts (
                                         id integer PRIMARY KEY,
                                         ip_address text NOT NULL,
-                                        fingerprint text NOT NULL,
+                                        fingerprint text,
                                         hostname text
                                     ); """
 

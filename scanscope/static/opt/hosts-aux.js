@@ -1,6 +1,5 @@
 async function main () {
     const hosts = await getHosts();
-    console.log(hosts);
 
     const tableDiv = document.querySelector("#hosts-table");
     tableDiv.innerText = "";

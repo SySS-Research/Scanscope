@@ -20,14 +20,11 @@ def write_output(data, outputfile, format="html"):
     if format == "json":
         fp.write(data["dataframe"].to_json().encode())
     elif format == "png":
-        write_png(fp, data)
+        raise NotImplementedError("PNG not yet implemented")
     elif format == "svg":
         raise NotImplementedError("SVG not yet implemented")
     elif format == "html":
-        from scanscope import html
+        from scanscope import html, write_output
 
-        html.reduce_and_plot(data, outputfile)
-
-
-def write_png(fp, data):
-    raise NotImplementedError("PNG not yet implemented")
+        plot = html.get_bokeh_plot(data, outputfile)
+        write_output(data, plot, "", "/tmp/scanscope")

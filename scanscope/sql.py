@@ -41,11 +41,10 @@ def insert_host(conn, host):
     :param host: A tuple (ip_address, hostname)
     :return: host id
     """
-    sql = ''' INSERT INTO hosts(ip_address, fingerprint, hostname)
-              VALUES(?,?,?) '''
+    sql = """ INSERT INTO hosts(ip_address, fingerprint, hostname)
+              VALUES(?,?,?) """
     cur = conn.cursor()
     cur.execute(sql, host)
-    conn.commit()
     return cur.lastrowid
 
 
@@ -55,35 +54,7 @@ def insert_port(conn, port):
     :param conn: Connection object
     :param port: A tuple (host_id, port_number, service_name)
     """
-    sql = ''' INSERT INTO ports(host_id, port_number, service_name)
-              VALUES(?,?,?) '''
+    sql = """ INSERT INTO ports(host_id, port_number, service_name)
+              VALUES(?,?,?) """
     cur = conn.cursor()
     cur.execute(sql, port)
-    conn.commit()
-
-
-# Example usage
-def main():
-    database = "hosts_ports.db"
-
-    # create a database connection
-    conn = create_connection(database)
-    with conn:
-        create_table(conn)
-
-        # Insert host data
-        host_data = ('192.168.1.1', 'example_host')
-        host_id = insert_host(conn, host_data)
-
-        # Insert port data
-        port_data = [
-            (host_id, 80, 'TCP', 'http'),
-            (host_id, 443, 'TCP', 'https'),
-            (host_id, 53, 'UDP', 'dns')
-        ]
-        for port in port_data:
-            insert_port(conn, port)
-
-if __name__ == '__main__':
-    main()
-

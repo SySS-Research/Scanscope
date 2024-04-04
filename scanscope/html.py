@@ -24,27 +24,14 @@ from bokeh import palettes
 SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
 
-def reduce_and_plot(
-    data, filename, circle_scale=1, title="", post_deduplicate=True, **kwargs
-):
-    if not post_deduplicate:
-        circle_scale /= 10
-    plot = get_bokeh_plot(
-        data, filename, circle_scale=7 * circle_scale, title=title, **kwargs
-    )
-
-    write_output(data, plot, title)
-
-
-def write_output(data, plot, title):
-    output_dir = "/tmp/scanscope"
+def write_output(data, plot, title, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     write_html(plot, title, output_dir)
     write_sqlite(data, output_dir)
     # TODO bundle and write to 'filename'
 
 
-def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
+def get_bokeh_plot(data, circle_scale=7, title=None):
     df = data["dataframe"]
     color_field = "color_index"
     df["size"] = list(4 + math.sqrt(1 + x) * circle_scale for x in df["fp_count"])
@@ -59,6 +46,7 @@ def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
         width=800,
         height=600,
         tools=("pan, wheel_zoom, reset, tap, box_select, lasso_select"),
+        sizing_mode="stretch_width",
     )
 
     plot_figure.toolbar.active_scroll = plot_figure.select_one(WheelZoomTool)
@@ -71,8 +59,15 @@ def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
     #  plot_figure.add_layout(color_bar, 'right')
 
     hover = HoverTool(tooltips=None)
-    callback = CustomJS(args={}, code="hostGroupHover(cb_data)")
-    hover.callback = callback
+    callback_hover = CustomJS(
+        args=dict(
+            opts=dict(
+                datasource=datasource, fp_map=data["fp_map"], color_map=color_mapping
+            )
+        ),
+        code="hostGroupHover(opts, cb_data)",
+    )
+    hover.callback = callback_hover
     plot_figure.add_tools(hover)
 
     circle_args = dict(
@@ -91,7 +86,7 @@ def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
                 datasource=datasource, fp_map=data["fp_map"], color_map=color_mapping
             )
         ),
-        code="hostGroupClick(opts)",
+        code="hostGroupClick(opts, cb_data)",
     )
 
     # set the callback to run when a selection geometry event occurs in the figure
@@ -100,7 +95,7 @@ def get_bokeh_plot(data, filename, circle_scale=1, title=None, **kwargs):
     return plot_figure
 
 
-def write_html(plot_figure, title, output_dir):
+def write_html(plot, title, output_dir):
     js_files = []
     css_files = []
     loader = jinja2.ChoiceLoader(
@@ -139,8 +134,8 @@ def write_html(plot_figure, title, output_dir):
 
     # Bokeh template is treated differently
     html = file_html(
-        #  column(stat_select, plot_figure),
-        plot_figure,
+        #  column(stat_select, plot),
+        plot,
         title=title,
         template=scanscope_env.get_template("bokeh.html"),
         template_variables=context,
@@ -158,17 +153,16 @@ def write_sqlite(data, output_dir):
 
     sql.create_table(conn)
 
-    for host in range(30):
-        host_data = ("192.168.1.1", str(host), "example_host")
+    for ip_address, data_ in data["portscan"].items():
+        host_data = (ip_address, data_["fingerprint"], data_.get("hostname"))
         host_id = sql.insert_host(conn, host_data)
 
-        port_data = [
-            (host_id, 80, "http"),
-            (host_id, 443, "https"),
-            (host_id, -53, "dns"),
-        ]
+        port_data = [(host_id, p, "") for p in data_["tcp_ports"]]
+        port_data += [(host_id, -p, "") for p in data_["udp_ports"]]
         for port in port_data:
             sql.insert_port(conn, port)
+
+    conn.commit()
 
 
 def get_sidebar():

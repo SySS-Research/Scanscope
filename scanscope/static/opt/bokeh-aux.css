@@ -6,3 +6,59 @@ div.bokeh-popup{
     color: black;
     z-index: 1000;
 }
+
+div.bokeh-host-group-list {
+}
+
+div.bokeh-host-group {
+    min-height: 25px;
+    border-left-width: 3px;
+    border-left-style: solid;
+}
+
+div.bokeh-host-group-separator {
+    height: 5px;
+}
+
+div.bokeh-host-group-list-head {
+    display: table;
+}
+
+div.bokeh-host-group-list-head-row{
+    display: table-row;
+}
+
+div.row-cell{
+    display: table-cell;
+}
+
+div.row-cell>*{
+    padding: 6px;
+}
+
+div.bokeh-host-group-list-body {
+}
+
+div.host-group-addresses span:nth-child(odd) {
+    color: var(--bs-secondary-text-emphasis);
+}
+
+div.host-group-ports {
+}
+
+div.host-group-ports:nth-child(odd) {
+}
+
+span.scanscope-host-address {
+    font-family: monospace;
+}
+
+span.scanscope-port {
+}
+
+
+span.ports-union {
+}
+
+span.ports-intersection {
+}

@@ -12471,6 +12471,5 @@ async function addPortHints() {
         }
 
         p.setAttribute("title", `${text}/${proto}: ${portMap[text]}`);
-        console.log(p, proto, text);
     });
 }

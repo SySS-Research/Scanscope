@@ -25,6 +25,7 @@ async function createHostsPopup(fingerprints, colorMap) {
     const templatePort = document.getElementById('template-port');
 
     const hostGroups = await getHostGroupsByFingerprints(fingerprints);
+    if (!hostGroups) { return };
 
     const hostsFragments = hostGroups.values.map(h => {
         const host = templateHost.content.cloneNode(true);

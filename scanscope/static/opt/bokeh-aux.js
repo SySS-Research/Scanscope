@@ -43,6 +43,7 @@ async function createHostsPopup(fingerprints, colorMap) {
     const popup = templatePopup.content.cloneNode(true);
     document.body.appendChild(popup);
     hostsFragments.forEach(h => document.querySelector('.bokeh-popup').appendChild(h));
+    addPortHints();
 }
 
 function getColorMap(indices, data, color_map){

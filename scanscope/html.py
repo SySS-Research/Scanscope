@@ -167,6 +167,7 @@ def write_sqlite(data, output_dir):
 
 def get_sidebar():
     result = [
+        {"title": "Overview", "link": "index.html"},
         {"title": "Hosts", "link": "hosts.html"},
         {"title": "Services", "link": "services.html"},
         {"title": "Diagram", "link": "diagram.html"},

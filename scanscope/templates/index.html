@@ -1,10 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Info</h3>
-<p class="lead">
-    An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
-    menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
-<ul class="list-unstyled">
-    <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
-</ul>
+<h3>Overview</h3>
+
+<dl>
+  <dt>Filename</dt>
+  <dd><code>{{filename}}</code></dd>
+
+  <dt>Timestamp</dt>
+  <dd>{{timestamp}}</dd>
+
+  <dt>Nmap command</dt>
+  <dd><code>{{nmap_command}}</code></dd>
+
+  <dt>Total number of hosts</dt>
+  <dd>{{hosts_count}}</dd>
+
+  <dt>Total number of open ports</dt>
+  <dd>{{ports_count}}</dd>
+
+  <dt>Port frequency chart</dt>
+  <dd></dd>
+
+  <dt>Port histogram chart</dt>
+  <dd></dd>
+</dl>
+
 {% endblock %}

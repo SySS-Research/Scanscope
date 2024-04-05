@@ -15,7 +15,38 @@ async function initDb() {
 
 async function getHosts() {
     const db = await initDb();
-    const result = db.exec("SELECT * FROM hosts");
+    const sql = `
+SELECT
+    h.ip_address,
+    GROUP_CONCAT(p.port_number ORDER BY p.port_number ASC) AS port_numbers
+FROM
+    hosts h
+LEFT JOIN
+    ports p ON h.id = p.host_id
+GROUP BY
+    h.id
+;
+    `;
+    const result = db.exec(sql);
+    return result[0];
+}
+
+async function getServices() {
+    const db = await initDb();
+    const sql = `
+SELECT
+    p.port_number,
+    GROUP_CONCAT(h.ip_address ORDER BY h.ip_address) AS ip_addresses
+FROM
+    ports p
+JOIN
+    hosts h ON p.host_id = h.id
+GROUP BY
+    p.port_number
+ORDER BY
+    p.port_number;
+    `;
+    const result = db.exec(sql);
     return result[0];
 }
 

@@ -130,7 +130,7 @@ async function createHostsGroupList(fingerprints, colorMap) {
             address.querySelector("span.scanscope-host-address").innerText = a;
             hostGroup.querySelector('.host-group-addresses').appendChild(address);
             if (i + 1 != row.length) {
-                // Only if this is not the last item
+                // Only if this is not the last item: insert a middot
                 hostGroup.querySelector('.host-group-addresses').appendChild(document.createTextNode(' \u00b7 '));
             }
         });

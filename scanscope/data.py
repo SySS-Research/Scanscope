@@ -63,7 +63,7 @@ def reduce(
     reducer = umap.UMAP(**kwargs)
 
     log.info("Transforming data...")
-    data, fp_count, fp_map = transform_data(portscan, deduplicate=pre_deduplicate)
+    data, fp_count, fp_map = transform_data(portscan["hosts"], deduplicate=pre_deduplicate)
 
     log.info("Reduce...")
     embedding = reducer.fit_transform(data)
@@ -73,13 +73,13 @@ def reduce(
     if pre_deduplicate:
         df["fingerprint"] = list(fp_map.keys())
         df["fp_count"] = list(fp_count.values())
-        df["tcp_ports"] = [portscan[x[0]]["tcp_ports"] for x in fp_map.values()]
-        df["udp_ports"] = [portscan[x[0]]["udp_ports"] for x in fp_map.values()]
+        df["tcp_ports"] = [portscan["hosts"][x[0]]["tcp_ports"] for x in fp_map.values()]
+        df["udp_ports"] = [portscan["hosts"][x[0]]["udp_ports"] for x in fp_map.values()]
     else:
-        df["fingerprint"] = list(x["fingerprint"] for x in portscan.values())
-        df["fp_count"] = list(fp_count[x["fingerprint"]] for x in portscan.values())
-        df["tcp_ports"] = [x["tcp_ports"] for x in portscan.values()]
-        df["udp_ports"] = [x["udp_ports"] for x in portscan.values()]
+        df["fingerprint"] = list(x["fingerprint"] for x in portscan["hosts"].values())
+        df["fp_count"] = list(fp_count[x["fingerprint"]] for x in portscan["hosts"].values())
+        df["tcp_ports"] = [x["tcp_ports"] for x in portscan["hosts"].values()]
+        df["udp_ports"] = [x["udp_ports"] for x in portscan["hosts"].values()]
 
     if post_deduplicate:
         x = df.groupby(["fingerprint"], dropna=False, sort=False)["x"]

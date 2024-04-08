@@ -25,8 +25,11 @@ SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
 
 def write_output(data, plot, title, output_dir):
-    from scanscope.utils import get_minimal_port_map
+    from scanscope.parser import get_minimal_port_map
+
     context = get_minimal_port_map(data["portscan"])
+    context.update(report=data["portscan"]["report"])
+
     os.makedirs(output_dir, exist_ok=True)
     write_html(plot, title, output_dir, context)
     write_sqlite(data, output_dir)
@@ -157,7 +160,7 @@ def write_sqlite(data, output_dir):
 
     sql.create_table(conn)
 
-    for ip_address, data_ in data["portscan"].items():
+    for ip_address, data_ in data["portscan"]["hosts"].items():
         host_data = (
             ip_address,
             int(ipaddress.ip_address(ip_address)),

@@ -14,7 +14,7 @@ def fingerprint(array):
 
 def get_host_info(filename):
     nm = NmapParser.parse_fromfile(filename)
-    results = {}
+    hosts = {}
 
     # Check number of scanned ports and emit warning if < 100
 
@@ -42,7 +42,13 @@ def get_host_info(filename):
         if host.os_match_probabilities():
             host_info["os"] = host.os_match_probabilities()[0]
 
-        results[host.address] = host_info
+        hosts[host.address] = host_info
+
+    nm.filename = filename
+    results = dict(
+        hosts=hosts,
+        report=nm,
+    )
 
     return results
 
@@ -57,3 +63,20 @@ def read_input(input_files):
         result.update(get_host_info(f))
 
     return result
+
+
+def get_minimal_port_map(portscan):
+    from scanscope.portmap import port_map_tcp, port_map_udp
+
+    tcp_ports = set()
+    for k in portscan["hosts"].values():
+        tcp_ports.update(k["tcp_ports"])
+
+    udp_ports = set()
+    for k in portscan["hosts"].values():
+        udp_ports.update(k["udp_ports"])
+
+    tcp = {k: v for k, v in port_map_tcp.items() if int(k) in tcp_ports}
+    udp = {k: v for k, v in port_map_udp.items() if int(k) in udp_ports}
+
+    return dict(port_map_tcp=tcp, port_map_udp=udp)

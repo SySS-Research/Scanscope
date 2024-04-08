@@ -4,25 +4,40 @@
 
 <dl>
   <dt>Filename</dt>
-  <dd><code>{{filename}}</code></dd>
-
-  <dt>Timestamp</dt>
-  <dd>{{timestamp}}</dd>
+  <dd><code>{{report.filename}}</code></dd>
 
   <dt>Nmap command</dt>
-  <dd><code>{{nmap_command}}</code></dd>
+  <dd><code>{{report.commandline}}</code></dd>
+
+  <dt>Nmap version</dt>
+  <dd>{{report.version}}</dd>
+
+  <dt>Scan started</dt>
+  <dd>{{report.started}}</dd>
+
+  <dt>Scan ended</dt>
+  <dd>{{report.endtime}}</dd>
+
+  <dt>Scan duration</dt>
+  <dd>{{report.elapsed}}</dd>
 
   <dt>Total number of hosts</dt>
-  <dd>{{hosts_count}}</dd>
+  <dd>{{report.hosts_total}}</dd>
 
-  <dt>Total number of open ports</dt>
-  <dd>{{ports_count}}</dd>
+  <dt>Number of hosts detected as "up"</dt>
+  <dd>{{report.hosts_up}}</dd>
+
+  <dt>Number of hosts detected as "down"</dt>
+  <dd>{{report.hosts_down}}</dd>
+
+{#  <dt>Total number of open ports</dt>
+  <dd>{{report.numservices}}</dd>
 
   <dt>Port frequency chart</dt>
   <dd></dd>
 
   <dt>Port histogram chart</dt>
-  <dd></dd>
+  <dd></dd> #}
 </dl>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 import os
+import pickle
 from pathlib import Path
 
 import pytest
@@ -72,8 +73,11 @@ def portscan_data(request):
         from scanscope.parser import read_input
 
         data = read_input([SCRIPT_PATH / "data" / "server-range.xml"])
+
+        data = pickle.dumps(data).decode('cp437')
         request.config.cache.set("portscan_data", data)
 
+    data = pickle.loads(data.encode('cp437'))
     return data
 
 
@@ -84,6 +88,8 @@ def reduced_portscan_data(request, portscan_data):
 
     data = request.config.cache.get("reduced_portscan_data", None)
 
+    # DataFrames can't be pickled, NmapReport can't be JSON serialized ...
+
     if data is None:
         from scanscope.data import reduce
 
@@ -92,8 +98,11 @@ def reduced_portscan_data(request, portscan_data):
             post_deduplicate=True,
             pre_deduplicate=False,
         )
+
         data["dataframe"] = data["dataframe"].to_json()
+        data["portscan"] = pickle.dumps(data["portscan"]).decode('cp437')
         request.config.cache.set("reduced_portscan_data", data)
 
+    data["portscan"] = pickle.loads(data["portscan"].encode('cp437'))
     data["dataframe"] = pandas.read_json(StringIO(data["dataframe"]))
     return data

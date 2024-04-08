@@ -31,7 +31,7 @@ async function main () {
         for (const [key, value] of Object.entries(labels)) {
             var td = document.createElement('td');
             const val = row[hosts.columns.indexOf(key)];
-            if (key == 'port_numbers') {
+            if (key == 'port_numbers' && val) {
                 val.split(',').forEach(p => {
                     const pSpan = templatePort.content.cloneNode(true);
                     pSpan.querySelector(".scanscope-port").innerText = p;

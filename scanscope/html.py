@@ -157,7 +157,7 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False):
         #  column(stat_select, plot),
         plot,
         title=title,
-        template=scanscope_env.get_template("bokeh.html"),
+        template=scanscope_env.get_template("diagram.html"),
         template_variables=dict(js_files=_js_files, css_files=_css_files, **context),
         theme=built_in_themes["dark_minimal"] if context["theme"] == "dark" else None,
     )
@@ -214,7 +214,7 @@ def get_resources(js_files, css_files, page):
         "index.html": [],
         "info.html": [],
         "diagram.html": [
-            "bokeh-aux.js",
+            "diagram-aux.js",
             "sql-aux.js",
             "sql-wasm.min.js",
         ],

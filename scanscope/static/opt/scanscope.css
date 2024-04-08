@@ -7,9 +7,6 @@ div.bokeh-popup{
     z-index: 1000;
 }
 
-div.bokeh-host-group-list {
-}
-
 div.bokeh-host-group {
     min-height: 25px;
     border-left-width: 3px;
@@ -36,32 +33,14 @@ div.row-cell>*{
     padding: 6px;
 }
 
-div.bokeh-host-group-list-body {
-}
-
-div.host-group-addresses span:nth-child(odd) {
+.scanscope-host-list span:nth-child(odd) {
     color: var(--bs-secondary-text-emphasis);
-}
-
-div.host-group-ports {
-}
-
-div.host-group-ports:nth-child(odd) {
 }
 
 span.scanscope-host-address {
     font-family: monospace;
 }
 
-span.scanscope-port {
-}
-
-
-span.ports-union {
-}
-
-span.ports-intersection {
-}
 .scanscope-host-list {
     position: relative;
 }
@@ -90,8 +69,6 @@ span.ports-intersection {
 
 .host-list-context-menu > button::after {
     margin-left: 0px !important;
-}
-div.table {
 }
 
 div.table td{

@@ -11,7 +11,7 @@
     transition: opacity 0.5s ease;
 }
 
-td:hover .host-list-context-menu {
+:hover .host-list-context-menu {
     opacity: 1;
 }
 
@@ -23,6 +23,7 @@ td:hover .host-list-context-menu {
     border-radius: 50%;
     background: none;
 }
+
 .host-list-context-menu > button::after {
     margin-left: 0px !important;
 }

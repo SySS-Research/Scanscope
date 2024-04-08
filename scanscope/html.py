@@ -152,17 +152,21 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False):
         open(Path(output_dir) / page, "w").write(html)
 
     # Bokeh template is treated differently
+    diagram_html = get_bokeh_html(scanscope_env, plot, title, js_files, css_files, context)
+    open(Path(output_dir) / "diagram.html", "w").write(diagram_html)
+
+
+def get_bokeh_html(env, plot, title, js_files, css_files, context):
     _js_files, _css_files = get_resources(js_files, css_files, "diagram.html")
     html = file_html(
         #  column(stat_select, plot),
         plot,
         title=title,
-        template=scanscope_env.get_template("diagram.html"),
+        template=env.get_template("diagram.html"),
         template_variables=dict(js_files=_js_files, css_files=_css_files, **context),
         theme=built_in_themes["dark_minimal"] if context["theme"] == "dark" else None,
     )
-
-    open(Path(output_dir) / "diagram.html", "w").write(html)
+    return html
 
 
 def write_sqlite(data, output_dir):

@@ -25,8 +25,10 @@ SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
 
 def write_output(data, plot, title, output_dir):
+    from scanscope.utils import get_minimal_port_map
+    context = get_minimal_port_map(data["portscan"])
     os.makedirs(output_dir, exist_ok=True)
-    write_html(plot, title, output_dir)
+    write_html(plot, title, output_dir, context)
     write_sqlite(data, output_dir)
     # TODO bundle and write to 'filename'
 
@@ -95,7 +97,7 @@ def get_bokeh_plot(data, circle_scale=7, title=None):
     return plot_figure
 
 
-def write_html(plot, title, output_dir):
+def write_html(plot, title, output_dir, context={}):
     js_files = []
     css_files = []
     loader = jinja2.ChoiceLoader(
@@ -124,7 +126,8 @@ def write_html(plot, title, output_dir):
 
     # Render templates
     context = dict(
-        css_files=css_files, js_files=js_files, theme="dark", sidebar=get_sidebar()
+        css_files=css_files, js_files=js_files, theme="dark", sidebar=get_sidebar(),
+        **context
     )
 
     for page in ["index.html", "hosts.html", "services.html", "info.html"]:

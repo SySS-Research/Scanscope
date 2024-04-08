@@ -1,0 +1,28 @@
+.scanscope-host-list {
+    position: relative;
+}
+
+.scanscope-host-list > .host-list-context-menu {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 5px 5px 0 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+td:hover .host-list-context-menu {
+    opacity: 1;
+}
+
+.host-list-context-menu > button {
+    padding: 0.25rem 0.25rem;
+    font-size: 0.75rem;
+    height: 21px;
+    width: 21px;
+    border-radius: 50%;
+    background: none;
+}
+.host-list-context-menu > button::after {
+    margin-left: 0px !important;
+}

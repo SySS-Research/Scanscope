@@ -1,6 +1,5 @@
 async function main () {
     const services = await getServices();
-    console.log(services);
 
     const tableDiv = document.querySelector("#services-table");
     tableDiv.innerText = "";
@@ -32,6 +31,7 @@ async function main () {
             var td = document.createElement('td');
             const val = row[services.columns.indexOf(key)];
             if (key == 'ip_addresses') {
+                td.classList.add("scanscope-host-list");
                 val.split(',').forEach(ip => {
                     const ipSpan = templateHostAddress.content.cloneNode(true);
                     ipSpan.querySelector(".scanscope-host-address").innerText = ip;
@@ -53,6 +53,7 @@ async function main () {
 
     tableDiv.appendChild(table);
     addPortHints();
+    addContextMenus();
 }
 
 window.addEventListener("load", main);

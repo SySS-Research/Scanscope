@@ -6,15 +6,15 @@ const portStylesTCP = {
     "22": { "color": "danger", },
     "23": { "color": "info", },
     "25": { "color": "dark", },
-    "53": { "color": "success", "style": "dashed"},
+    "53": { "color": "success", "dashed": true},
     "80": { "color": "primary", },
-    "110": { "color": "info", "style": "dashed"},
-    "135": { "color": "primary", "style": "dashed"},
-    "139": { "color": "dark", "style": "dashed"},
-    "143": { "color": "danger", "style": "dashed"},
+    "110": { "color": "info", "dashed": true},
+    "135": { "color": "primary", "dashed": true},
+    "139": { "color": "dark", "dashed": true},
+    "143": { "color": "danger", "dashed": true},
     "443": { "color": "warning", },
-    "445": { "color": "warning", "style": "dashed"},
-    "3306": { "color": "light", "style": "dashed"},
+    "445": { "color": "warning", "dashed": true},
+    "3306": { "color": "light", "dashed": true},
     "3398": { "color": "light", },
 };
 // nmap top 7/udp:
@@ -30,7 +30,7 @@ const portStylesUDP = {
 }
 
 async function addPortHints() {
-    const ports = document.querySelectorAll('span.scanscope-port');
+    const ports = document.querySelectorAll("span.scanscope-port");
     let proto = null;
     let portMap = null;
 
@@ -56,12 +56,41 @@ async function addPortHints() {
         if (portStylesTCP[text] && proto === "tcp") {
             p.classList.remove("border-secondary");
             p.classList.add("border-" + portStylesTCP[text].color);
-            if (portStylesTCP[text].style == "dashed") {
+            if (portStylesTCP[text].dashed) {
                 p.setAttribute("style", "border-style: dashed !important;");
+            }
+            if (portStylesTCP[text].thick) {
+                p.setAttribute("style", "border-width: 3px !important;");
             }
         } else if (portStylesUDP[text] && proto === "udp") {
             p.classList.remove("badge-secondary");
             p.classList.add("badge-" + portStylesUDP[text]);
         }
     });
+}
+
+async function addContextMenus() {
+    const hostlists = document.querySelectorAll(".scanscope-host-list");
+    const templateMenu = document.querySelector("#template-hosts-list-context-menu")
+    hostlists.forEach(h => {
+        const menu = templateMenu.content.cloneNode(true);
+        menu.querySelector("a.copy-line").addEventListener("click", e => copyHosts(e, "\n"));
+        menu.querySelector("a.copy-space").addEventListener("click", e => copyHosts(e, " "));
+        menu.querySelector("a.copy-comma").addEventListener("click", e => copyHosts(e, ","));
+        h.appendChild(menu);
+    });
+}
+
+async function copyHosts(evnt, separator) {
+    const list = evnt.target.closest(".scanscope-host-list");
+    var result = []
+    list.querySelectorAll(".scanscope-host-address").forEach(a => {
+        result.push(a.innerText);
+    });
+    var text = result.join(separator);
+    try {
+        await navigator.clipboard.writeText(text);
+        // TODO show indicator that text has been copied
+    } catch (e) {
+    }
 }

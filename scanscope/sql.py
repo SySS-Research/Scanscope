@@ -23,8 +23,8 @@ def create_table(conn):
         os text,
         hostname text
     );"""
-    sql_create_fp_index = """
-    CREATE INDEX idx_fingerprint ON hosts (fingerprint);
+    sql_create_index_on_hosts = """
+    CREATE INDEX idx_%(column)s ON hosts (%(column)s);
     """
 
     sql_create_ports_table = """
@@ -42,7 +42,8 @@ def create_table(conn):
     c = conn.cursor()
     c.execute(sql_create_hosts_table)
     c.execute(sql_create_ports_table)
-    c.execute(sql_create_fp_index)
+    for column in "ip_address ip_address_int fingerprint hostname".split():
+        c.execute(sql_create_index_on_hosts % dict(column=column))
     c.execute(sql_create_ports_index)
 
 

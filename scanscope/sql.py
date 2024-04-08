@@ -18,7 +18,9 @@ def create_table(conn):
     CREATE TABLE IF NOT EXISTS hosts (
         id integer PRIMARY KEY,
         ip_address text NOT NULL,
+        ip_address_int integer NOT NULL,
         fingerprint text,
+        os text,
         hostname text
     );"""
     sql_create_fp_index = """
@@ -51,8 +53,8 @@ def insert_host(conn, host):
     :param host: A tuple (ip_address, hostname)
     :return: host id
     """
-    sql = """ INSERT INTO hosts(ip_address, fingerprint, hostname)
-              VALUES(?,?,?) """
+    sql = """ INSERT INTO hosts(ip_address, ip_address_int, fingerprint, hostname, os)
+              VALUES(?,?,?,?,?) """
     cur = conn.cursor()
     cur.execute(sql, host)
     return cur.lastrowid

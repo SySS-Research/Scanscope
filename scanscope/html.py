@@ -149,6 +149,7 @@ def write_html(plot, title, output_dir, context={}):
 
 
 def write_sqlite(data, output_dir):
+    import ipaddress
     from . import sql
 
     file_path = Path(output_dir) / "data.sqlite"
@@ -157,7 +158,13 @@ def write_sqlite(data, output_dir):
     sql.create_table(conn)
 
     for ip_address, data_ in data["portscan"].items():
-        host_data = (ip_address, data_["fingerprint"], data_.get("hostname"))
+        host_data = (
+            ip_address,
+            int(ipaddress.ip_address(ip_address)),
+            data_["fingerprint"],
+            data_.get("hostname"),
+            data_.get("os"),
+        )
         host_id = sql.insert_host(conn, host_data)
 
         port_data = [(host_id, p, "") for p in data_["tcp_ports"]]

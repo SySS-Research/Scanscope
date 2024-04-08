@@ -4,8 +4,10 @@ async function initDb() {
     if (scanscope_cache.db) { return scanscope_cache.db }
     const initSqlJs = window.initSqlJs;
     const sqlPromise = initSqlJs({
-        locateFile: file => `${file}`
+        locateFile: file => (wasm_base + "/" + file)
     });
+    console.log("initDb", wasm_base);
+
     const dataPromise = fetch("data.sqlite").then(res => res.arrayBuffer());
     const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
     const db = new SQL.Database(new Uint8Array(buf));

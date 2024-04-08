@@ -2,6 +2,7 @@ async function main () {
     const services = await getServices();
 
     const tableDiv = document.querySelector("#services-table");
+    if (!tableDiv) {return;}
     tableDiv.innerText = "";
 
     const table = document.createElement('table');

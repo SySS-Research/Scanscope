@@ -36,7 +36,7 @@ parser.add_argument(
 parser.add_argument(
     "-f",
     "--format",
-    choices=["html-directory", "html", "png", "svg", "json"],
+    choices=["html-directory", "html", "json"],  # "png", "svg"
     default="html",
     help="Output format (default: %(default)s)",
 )
@@ -64,6 +64,14 @@ parser.add_argument(
 
 params = parser.add_argument_group(
     title="Data parameters", description="These arguments influence the data processing"
+)
+
+
+params.add_argument(
+    "-C", "--use-cdn",
+    default=False,
+    action="store_true",
+    help="Use a CDN instead of embedding dependencies to reduce the file size",
 )
 
 

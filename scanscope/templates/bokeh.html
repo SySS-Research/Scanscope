@@ -3,12 +3,7 @@
 {% from macros import embed %}
 
 {% block head %}
-<script type="text/javascript" src="sql-wasm.min.js"></script>
-<script type="text/javascript" src="sql-aux.js"></script>
 <script>const portMapTCP = {{port_map_tcp}}; const portMapUDP = {{port_map_udp}};</script>
-<script type="text/javascript" src="utils.js"></script>
-<script type="text/javascript" src="bokeh-aux.js"></script>
-<link rel="stylesheet" href="scanscope.css" type="text/css" />
 {% endblock %}
 
 {% block content %}

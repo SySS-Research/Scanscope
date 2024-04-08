@@ -23,15 +23,23 @@ from bokeh import palettes
 
 SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
+CDN = {
+    "bootstrap.bundle.min.js": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js",
+    "bootstrap.min.css": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css",
+    "sql-wasm.min.js": "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.min.js",
+    "sql-wasm.wasm": "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2",
+    # only the base where the script sql-wasm.min.js looks
+}
 
-def write_output(data, plot, title, output_dir):
+
+def write_output(data, plot, title, output_dir, use_cdn=False):
     from scanscope.parser import get_minimal_port_map
 
     context = get_minimal_port_map(data["portscan"])
     context.update(report=data["portscan"]["report"])
 
     os.makedirs(output_dir, exist_ok=True)
-    write_html(plot, title, output_dir, context)
+    write_html(plot, title, output_dir, context, use_cdn=use_cdn)
     write_sqlite(data, output_dir)
 
 
@@ -101,11 +109,12 @@ def get_bokeh_plot(data, circle_scale=7, title=None):
 
 def _jinja2_filter_datetime(date, fmt=None):
     import datetime
+
     format = "%Y-%m-%d %H:%M:%S %Z"
     return datetime.datetime.fromtimestamp(date).strftime(format)
 
 
-def write_html(plot, title, output_dir, context={}):
+def write_html(plot, title, output_dir, context={}, use_cdn=False):
     js_files = []
     css_files = []
     loader = jinja2.ChoiceLoader(
@@ -117,43 +126,39 @@ def write_html(plot, title, output_dir, context={}):
     scanscope_env = jinja2.Environment(loader=loader)
     scanscope_env.filters["strftime"] = _jinja2_filter_datetime
 
-    # Copy and auto-include common files
-    static_path = SCRIPT_PATH / "static" / "common"
+    context = dict(theme="dark", sidebar=get_sidebar(), wasm_base="", **context)
+
+    # Copy and auto-include static files
+    static_path = SCRIPT_PATH / "static"
     for file in os.listdir(static_path):
-        src = static_path / file
-        shutil.copyfile(src, Path(output_dir) / file)
+        if use_cdn and file in CDN:
+            if file == "sql-wasm.wasm":
+                context["wasm_base"] = CDN[file]
+            file = CDN[file]
+        else:
+            src = static_path / file
+            shutil.copyfile(src, Path(output_dir) / file)
+
         if file.endswith(".js"):
             js_files.append(file)
         if file.endswith(".css"):
             css_files.append(file)
 
-    # Copy optional files only
-    static_path = SCRIPT_PATH / "static" / "opt"
-    for file in os.listdir(static_path):
-        src = static_path / file
-        shutil.copyfile(src, Path(output_dir) / file)
-
     # Render templates
-    context = dict(
-        css_files=css_files,
-        js_files=js_files,
-        theme="dark",
-        sidebar=get_sidebar(),
-        **context
-    )
-
     for page in ["index.html", "hosts.html", "services.html", "info.html"]:
         template = scanscope_env.get_template(page)
-        html = template.render(**context)
+        _js_files, _css_files = get_resources(js_files, css_files, page)
+        html = template.render(css_files=_css_files, js_files=_js_files, **context)
         open(Path(output_dir) / page, "w").write(html)
 
     # Bokeh template is treated differently
+    _js_files, _css_files = get_resources(js_files, css_files, "diagram.html")
     html = file_html(
         #  column(stat_select, plot),
         plot,
         title=title,
         template=scanscope_env.get_template("bokeh.html"),
-        template_variables=context,
+        template_variables=dict(js_files=_js_files, css_files=_css_files, **context),
         theme=built_in_themes["dark_minimal"] if context["theme"] == "dark" else None,
     )
 
@@ -196,3 +201,43 @@ def get_sidebar():
         {"title": "Info", "link": "info.html"},
     ]
     return result
+
+
+def get_resources(js_files, css_files, page):
+    common = [
+        "bootstrap.bundle.min.js",
+        "bootstrap.min.css",
+        "utils.js",
+        "scanscope.css",
+    ]
+    resource_map = {
+        "index.html": [],
+        "info.html": [],
+        "diagram.html": [
+            "bokeh-aux.js",
+            "sql-aux.js",
+            "sql-wasm.min.js",
+        ],
+        "services.html": [
+            "services-aux.js",
+            "sql-aux.js",
+            "sql-wasm.min.js",
+        ],
+        "hosts.html": [
+            "hosts-aux.js",
+            "sql-aux.js",
+            "sql-wasm.min.js",
+        ],
+    }
+    _js_files = [
+        file
+        for file in js_files
+        if Path(file).name in resource_map[page] or Path(file).name in common
+    ]
+    _css_files = [
+        file
+        for file in css_files
+        if Path(file).name in resource_map[page] or Path(file).name in common
+    ]
+
+    return _js_files, _css_files

@@ -5,6 +5,7 @@
     <title>Scanscope: {{report.filename}}</title>
     {{- bokeh_css if bokeh_css }}
     {{  bokeh_js if bokeh_js }}
+    <script>const wasm_base = "{{wasm_base}}";</script>
 {% for file in js_files %}
     <script type="text/javascript" src="{{ file }}"></script>
 {% endfor %}

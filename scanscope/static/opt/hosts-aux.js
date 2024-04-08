@@ -7,10 +7,10 @@ async function main () {
     const table = document.createElement('table');
 
     const labels = {
+        hostname: "Hostname",
         ip_address: "IP Address",
         port_numbers: "Ports",
         os: "OS",
-        hostname: "Hostname",
     };
 
     var tr = document.createElement('tr');

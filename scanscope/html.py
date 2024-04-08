@@ -100,6 +100,12 @@ def get_bokeh_plot(data, circle_scale=7, title=None):
     return plot_figure
 
 
+def _jinja2_filter_datetime(date, fmt=None):
+    import datetime
+    format = "%Y-%m-%d %H:%M:%S %Z"
+    return datetime.datetime.fromtimestamp(date).strftime(format)
+
+
 def write_html(plot, title, output_dir, context={}):
     js_files = []
     css_files = []
@@ -110,6 +116,7 @@ def write_html(plot, title, output_dir, context={}):
         ]
     )
     scanscope_env = jinja2.Environment(loader=loader)
+    scanscope_env.filters["strftime"] = _jinja2_filter_datetime
 
     # Copy and auto-include common files
     static_path = SCRIPT_PATH / "static" / "common"
@@ -129,7 +136,10 @@ def write_html(plot, title, output_dir, context={}):
 
     # Render templates
     context = dict(
-        css_files=css_files, js_files=js_files, theme="dark", sidebar=get_sidebar(),
+        css_files=css_files,
+        js_files=js_files,
+        theme="dark",
+        sidebar=get_sidebar(),
         **context
     )
 

@@ -13,13 +13,13 @@
   <dd>{{report.version}}</dd>
 
   <dt>Scan started</dt>
-  <dd>{{report.started}}</dd>
+  <dd>{{report.started|strftime}}</dd>
 
   <dt>Scan ended</dt>
-  <dd>{{report.endtime}}</dd>
+  <dd>{{report.endtime|strftime}}</dd>
 
   <dt>Scan duration</dt>
-  <dd>{{report.elapsed}}</dd>
+  <dd>{{(report.elapsed/60*100)//100}} min</dd>
 
   <dt>Total number of hosts</dt>
   <dd>{{report.hosts_total}}</dd>

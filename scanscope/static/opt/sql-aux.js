@@ -18,6 +18,8 @@ async function getHosts() {
     const sql = `
 SELECT
     h.ip_address,
+    h.hostname,
+    h.os,
     GROUP_CONCAT(p.port_number ORDER BY p.port_number ASC) AS port_numbers
 FROM
     hosts h
@@ -25,6 +27,8 @@ LEFT JOIN
     ports p ON h.id = p.host_id
 GROUP BY
     h.id
+ORDER BY
+    h.ip_address_int
 ;
     `;
     const result = db.exec(sql);
@@ -36,7 +40,8 @@ async function getServices() {
     const sql = `
 SELECT
     p.port_number,
-    GROUP_CONCAT(h.ip_address ORDER BY h.ip_address) AS ip_addresses
+    GROUP_CONCAT(h.hostname ORDER BY h.ip_address_int) AS hostnames,
+    GROUP_CONCAT(h.ip_address ORDER BY h.ip_address_int) AS ip_addresses
 FROM
     ports p
 JOIN
@@ -61,7 +66,8 @@ async function getHostGroupsByFingerprints(fingerprints) {
     const sql = `
 SELECT
     h.fingerprint,
-    GROUP_CONCAT(DISTINCT h.ip_address) AS ip_addresses,
+    GROUP_CONCAT(DISTINCT h.ip_address ORDER BY h.ip_address_int) AS ip_addresses,
+    GROUP_CONCAT(h.hostname ORDER BY h.ip_address_int) AS hostnames,
     (
         SELECT GROUP_CONCAT(p.port_number)
         FROM ports p

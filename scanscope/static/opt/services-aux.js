@@ -24,17 +24,22 @@ async function main () {
     const templateHostAddress = document.getElementById('template-host-address');
     const templatePort = document.getElementById('template-port');
 
-    services.values.forEach(row => {
+    services.values.forEach((row, rowIndex) => {
         var tr = document.createElement('tr');
+        const hostnames = row[services.columns.indexOf("hostnames")].split(",");
 
         for (const [key, value] of Object.entries(labels)) {
             var td = document.createElement('td');
             const val = row[services.columns.indexOf(key)];
             if (key == 'ip_addresses') {
                 td.classList.add("scanscope-host-list");
-                val.split(',').forEach(ip => {
+                val.split(',').forEach((ip, ipIndex) => {
                     const ipSpan = templateHostAddress.content.cloneNode(true);
-                    ipSpan.querySelector(".scanscope-host-address").innerText = ip;
+                    let addressElement = ipSpan.querySelector(".scanscope-host-address");
+                    addressElement.innerText = ip;
+                    if (hostnames[ipIndex]) {
+                        addressElement.title = hostnames[ipIndex];
+                    }
                     td.appendChild(ipSpan);
                 });
             } else if (key == 'port_number') {

@@ -37,6 +37,11 @@ def get_host_info(filename):
             # This will cause hosts with NO open ports to be gray
             host_info["fingerprint"] = None
 
+        if host.hostnames:
+            host_info["hostname"] = host.hostnames[0]
+        if host.os_match_probabilities():
+            host_info["os"] = host.os_match_probabilities()[0]
+
         results[host.address] = host_info
 
     return results

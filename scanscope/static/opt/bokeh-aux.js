@@ -125,15 +125,19 @@ async function createHostsGroupList(fingerprints, colorMap) {
     hostGroups.values.forEach(h => {
         const hostGroup = templateHostGroup.content.cloneNode(true);
 
+        const hostnames = h[hostGroups.columns.indexOf("hostnames")].split(",");
         const addresses = h[hostGroups.columns.indexOf("ip_addresses")].split(',');
         addresses.forEach((a, i, row) => {
             const address = templateHostAddress.content.cloneNode(true);
             address.querySelector("span.scanscope-host-address").innerText = a;
-            hostGroup.querySelector('.host-group-addresses').appendChild(address);
-            if (i + 1 != row.length) {
-                // Only if this is not the last item: insert a middot
-                hostGroup.querySelector('.host-group-addresses').appendChild(document.createTextNode(' \u00b7 '));
+            if (hostnames[i]) {
+                address.querySelector("span.scanscope-host-address").title = hostnames[i];
             }
+            hostGroup.querySelector('.host-group-addresses').appendChild(address);
+            // if (i + 1 != row.length) {
+            //     // Only if this is not the last item: insert a middot
+            //     hostGroup.querySelector('.host-group-addresses').appendChild(document.createTextNode(' \u00b7 '));
+            // }
         });
 
         const ports = h[hostGroups.columns.indexOf("port_numbers")].split(',');

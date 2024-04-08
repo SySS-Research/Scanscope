@@ -170,4 +170,5 @@ async function hostGroupClick(opts, cb_data) {
     const colorMap = getColorMap(indices, opts.datasource.data, opts.color_map);
     await createHostsGroupList(fingerprints, colorMap);
     addPortHints();
+    addContextMenus();
 }

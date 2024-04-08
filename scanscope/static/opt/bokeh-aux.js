@@ -104,6 +104,7 @@ function portIntersection(hostGroups) {
 async function createHostsGroupList(fingerprints, colorMap) {
     // Create the DOM elements after the user clicked on host group circle
     const hostGroups = await getHostGroupsByFingerprints(fingerprints);
+    if (!hostGroups) {return};
 
     const templateHostGroupList = document.getElementById('template-host-group-list');
     const templateHostGroup = document.getElementById('template-host-group');

@@ -25,6 +25,9 @@ Installation
 $ pipx install git@git.syss.intern:avollmer/Scanscope.git
 ```
 
+Unfortunately, the requirements (in particular the machine learning
+dependencies including `numpy` and `pandas`) are quite heavy with almost 600MB, so be prepared.
+
 Usage
 -----
 

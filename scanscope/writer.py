@@ -30,4 +30,14 @@ def write_output(data, output_path, format="html"):
             from scanscope.html import write_output
             write_output(data, plot, "", output_path)
         elif format == "html":
-            raise NotImplementedError("Single HTML not yet implemented")
+            from scanscope.html import write_output
+            from tempfile import TemporaryDirectory
+            from zundler.embed import embed_assets
+            from pathlib import Path
+
+            with TemporaryDirectory() as tmpdirname:
+                write_output(data, plot, "", tmpdirname)
+                embed_assets(
+                    Path(tmpdirname) / "index.html",
+                    output_path=output_path,
+                )

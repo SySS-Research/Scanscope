@@ -33,7 +33,6 @@ def write_output(data, plot, title, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     write_html(plot, title, output_dir, context)
     write_sqlite(data, output_dir)
-    # TODO bundle and write to 'filename'
 
 
 def get_bokeh_plot(data, circle_scale=7, title=None):

@@ -37,7 +37,7 @@ parser.add_argument(
     "-f",
     "--format",
     choices=["html-directory", "html", "png", "svg", "json"],
-    default="html-directory",
+    default="html",
     help="Output format (default: %(default)s)",
 )
 

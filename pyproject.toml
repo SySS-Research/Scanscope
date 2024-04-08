@@ -31,7 +31,8 @@ dependencies = [
     'pandas',
     'python-libnmap',
     'umap-learn',
-    'pyxdg'
+    'pyxdg',
+    'zundler',
 ]
 
 [tool.setuptools]

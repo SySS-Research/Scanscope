@@ -18,9 +18,6 @@ from bokeh.models import (
 )
 from bokeh import palettes
 
-#  from bokeh.layouts import column
-#  from bokeh.models import ColorBar, LogTicker
-
 SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
 CDN = {
@@ -65,10 +62,6 @@ def get_bokeh_plot(data, circle_scale=7, title=None):
 
     plot_figure.xaxis.major_label_text_font_size = "0pt"  # turn off x-axis tick labels
     plot_figure.yaxis.major_label_text_font_size = "0pt"  # turn off y-axis tick labels
-
-    #  color_bar = ColorBar(color_mapper=color_mapping, ticker=LogTicker(),
-    #                       label_standoff=12, border_line_color=None, location=(0, 0))
-    #  plot_figure.add_layout(color_bar, 'right')
 
     hover = HoverTool(tooltips=None)
     callback_hover = CustomJS(
@@ -236,12 +229,12 @@ def get_resources(js_files, css_files, page):
     _js_files = [
         file
         for file in js_files
-        if Path(file).name in resource_map[page] or Path(file).name in common
+        if Path(file).name in resource_map[page] + common
     ]
     _css_files = [
         file
         for file in css_files
-        if Path(file).name in resource_map[page] or Path(file).name in common
+        if Path(file).name in resource_map[page] + common
     ]
 
     return _js_files, _css_files

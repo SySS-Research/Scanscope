@@ -29,15 +29,23 @@ CDN = {
 }
 
 
-def write_output(data, plot, title, output_dir, use_cdn=False):
+def write_output(data, plot, title, output_dir, use_cdn=False, embed_sqlite=False):
     from scanscope.parser import get_minimal_port_map
 
     context = get_minimal_port_map(data["portscan"])
     context.update(report=data["portscan"]["report"])
 
     os.makedirs(output_dir, exist_ok=True)
-    write_html(plot, title, output_dir, context, use_cdn=use_cdn)
-    write_sqlite(data, output_dir)
+    if embed_sqlite:
+        sqlite_db = get_sqlite(data)
+        write_html(
+            plot, title, output_dir, context, use_cdn=use_cdn, sqlite_db=sqlite_db
+        )
+    else:
+        sqlite_db = get_sqlite(data)
+        file_path = Path(output_dir) / "data.sqlite"
+        open(file_path, "wb").write(sqlite_db)
+        write_html(plot, title, output_dir, context, use_cdn=use_cdn)
 
 
 def get_bokeh_plot(data, circle_scale=7, title=None):
@@ -107,7 +115,7 @@ def _jinja2_filter_datetime(date, fmt=None):
     return datetime.datetime.fromtimestamp(date).strftime(format)
 
 
-def write_html(plot, title, output_dir, context={}, use_cdn=False):
+def write_html(plot, title, output_dir, context={}, use_cdn=False, sqlite_db=None):
     js_files = []
     css_files = []
     loader = jinja2.ChoiceLoader(
@@ -119,7 +127,24 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False):
     scanscope_env = jinja2.Environment(loader=loader)
     scanscope_env.filters["strftime"] = _jinja2_filter_datetime
 
-    context = dict(theme="dark", sidebar=get_sidebar(), wasm_base="", **context)
+    if sqlite_db:
+        import base64
+
+        sqlite_db = base64.b64encode(sqlite_db).decode()
+        filename = SCRIPT_PATH / "static" / "sql-wasm.wasm"
+        sql_wasm = open(filename, "rb").read()
+        sql_wasm = base64.b64encode(sql_wasm).decode()
+    else:
+        sql_wasm = ""
+
+    context = dict(
+        theme="dark",
+        sidebar=get_sidebar(),
+        wasm_base="",
+        wasm_codearray=sql_wasm,
+        sqlite_db=sqlite_db,
+        **context
+    )
 
     # Copy and auto-include static files
     static_path = SCRIPT_PATH / "static"
@@ -138,14 +163,22 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False):
             css_files.append(file)
 
     # Render templates
-    for page in ["index.html", "hosts.html", "services.html", "info.html", "licenses.html"]:
+    for page in [
+        "index.html",
+        "hosts.html",
+        "services.html",
+        "info.html",
+        "licenses.html",
+    ]:
         template = scanscope_env.get_template(page)
         _js_files, _css_files = get_resources(js_files, css_files, page)
         html = template.render(css_files=_css_files, js_files=_js_files, **context)
         open(Path(output_dir) / page, "w").write(html)
 
     # Bokeh template is treated differently
-    diagram_html = get_bokeh_html(scanscope_env, plot, title, js_files, css_files, context)
+    diagram_html = get_bokeh_html(
+        scanscope_env, plot, title, js_files, css_files, context
+    )
     open(Path(output_dir) / "diagram.html", "w").write(diagram_html)
 
 
@@ -162,12 +195,11 @@ def get_bokeh_html(env, plot, title, js_files, css_files, context):
     return html
 
 
-def write_sqlite(data, output_dir):
+def get_sqlite(data):
     import ipaddress
     from . import sql
 
-    file_path = Path(output_dir) / "data.sqlite"
-    conn = sql.create_connection(file_path)
+    conn = sql.create_connection(":memory:")
 
     sql.create_table(conn)
 
@@ -187,6 +219,8 @@ def write_sqlite(data, output_dir):
             sql.insert_port(conn, port)
 
     conn.commit()
+
+    return conn.serialize()
 
 
 def get_sidebar():
@@ -228,14 +262,10 @@ def get_resources(js_files, css_files, page):
         ],
     }
     _js_files = [
-        file
-        for file in js_files
-        if Path(file).name in resource_map[page] + common
+        file for file in js_files if Path(file).name in resource_map[page] + common
     ]
     _css_files = [
-        file
-        for file in css_files
-        if Path(file).name in resource_map[page] + common
+        file for file in css_files if Path(file).name in resource_map[page] + common
     ]
 
     return _js_files, _css_files

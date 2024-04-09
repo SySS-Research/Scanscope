@@ -1,17 +1,46 @@
 const scanscope_cache = {};
 
+var _base64ToArrayBuffer = function (base64) {
+    if (!base64) { return []}
+    var binary_string = window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
+};
+
 async function initDb() {
     if (scanscope_cache.db) { return scanscope_cache.db }
-    const initSqlJs = window.initSqlJs;
-    const sqlPromise = initSqlJs({
-        locateFile: file => (wasm_base + "/" + file)
-    });
-    console.log("initDb", wasm_base);
 
-    const dataPromise = fetch("data.sqlite").then(res => res.arrayBuffer());
+    const initSqlJs = window.initSqlJs;
+    var wasm_url = "";
+    var sqlite_db_url = "";
+
+    if (wasm_codearray) {
+        wasm_url = URL.createObjectURL(new Blob([_base64ToArrayBuffer(wasm_codearray)], { type: 'application/wasm' }));
+    } else {
+        wasm_url = wasm_base + "/" + file;
+    }
+
+    const sqlPromise = initSqlJs({
+        locateFile: file => wasm_url
+    });
+
+    if (sqlite_db) {
+        sqlite_db_url = URL.createObjectURL(new Blob([_base64ToArrayBuffer(sqlite_db)], { type: 'application/x-sqlite3' }));
+    } else {
+        sqlite_db_url = "data.sqlite";
+    }
+
+    const dataPromise = fetch(sqlite_db_url).then(res => res.arrayBuffer());
+
     const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
     const db = new SQL.Database(new Uint8Array(buf));
+
     scanscope_cache.db = db;
+
     return db;
 }
 

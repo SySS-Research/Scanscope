@@ -37,4 +37,4 @@ def write_output_html(data, output_path, zundler=False, use_cdn=False):
                 output_path=output_path,
             )
     else:
-        write_output(data, plot, "", output_path, use_cdn=use_cdn)
+        write_output(data, plot, "", output_path, use_cdn=use_cdn, embed_sqlite=True)

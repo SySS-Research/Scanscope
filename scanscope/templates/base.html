@@ -5,7 +5,11 @@
     <title>Scanscope: {{report.filename}}</title>
     {{- bokeh_css if bokeh_css }}
     {{  bokeh_js if bokeh_js }}
-    <script>const wasm_base = "{{wasm_base}}";</script>
+    <script>
+        const wasm_base = "{{wasm_base}}";
+        const wasm_codearray = "{{wasm_codearray}}";
+        const sqlite_db = "{{sqlite_db}}";
+    </script>
 {% for file in js_files %}
     <script type="text/javascript" src="{{ file }}"></script>
 {% endfor %}

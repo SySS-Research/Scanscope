@@ -1,6 +1,8 @@
 import os
 import pickle
 from pathlib import Path
+import base64
+import re
 
 import pytest
 
@@ -8,7 +10,8 @@ import pytest
 SCRIPT_PATH = Path(os.path.abspath(os.path.dirname(__file__)))
 
 
-def test_write_html(reduced_portscan_data):
+@pytest.fixture(scope="session")
+def html_directory(request, reduced_portscan_data):
     from scanscope.html import write_html
     from scanscope.html import get_bokeh_plot
     from tempfile import TemporaryDirectory
@@ -17,15 +20,23 @@ def test_write_html(reduced_portscan_data):
         bokeh_plot = get_bokeh_plot(reduced_portscan_data)
         context = {}
         context.update(report=reduced_portscan_data["portscan"]["report"])
-        write_html(bokeh_plot, "TestTitle", tmpdir, context)
+        sqlite_db = b"\0"*128
+        write_html(bokeh_plot, "TestTitle", tmpdir, context, sqlite_db=sqlite_db)
 
-        files = os.listdir(tmpdir)
+        yield tmpdir
 
-        for file in ["diagram", "index", "hosts", "info", "licenses"]:
-            assert f"{file}.html" in files
-            html = open(Path(tmpdir) / f"{file}.html", "r").read()
-            assert "bootstrap.bundle.min.js" in html
-            assert "bootstrap.min.css" in html
+
+def test_write_html(html_directory):
+    files = os.listdir(html_directory)
+    sqlite_db = b"\0"*128
+
+    for file in ["diagram", "index", "hosts", "info", "licenses"]:
+        assert f"{file}.html" in files
+        html = open(Path(html_directory) / f"{file}.html", "r").read()
+        assert "bootstrap.bundle.min.js" in html
+        assert "bootstrap.min.css" in html
+        assert base64.b64encode(sqlite_db).decode() in html
+        assert re.search(r'.*wasm_codearray = ".+".*', html)
 
 
 def test_get_bokeh_html():

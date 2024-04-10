@@ -55,7 +55,8 @@ def test_get_bokeh_html():
     assert "data-root-id" in html
 
 
-def test_html_output(reduced_portscan_data):
+def test_interactive_html_output(reduced_portscan_data):
+    # Only generate output for interactive testing
     from scanscope.html import write_output
     from scanscope.html import get_bokeh_plot
 

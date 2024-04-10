@@ -8,7 +8,7 @@ Visualize portscan results
 What the Eff?
 -----------
 
-In short: We interpret a host as a point in a vector space with 2\*\*17
+In short: We interpret a host as a point in a vector space with 2^17
 dimensions over F_2.  Each dimension corresponds to a TCP- or UDP-port and has
 either value 0 or 1, depending on its state. Then we apply a dimensionality
 reduction technique named UMAP to project the data onto two dimensions.

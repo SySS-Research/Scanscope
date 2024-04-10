@@ -15,17 +15,20 @@ async function initDb() {
     if (scanscope_cache.db) { return scanscope_cache.db }
 
     const initSqlJs = window.initSqlJs;
-    var wasm_url = "";
     var sqlite_db_url = "";
 
-    if (wasm_codearray) {
-        wasm_url = URL.createObjectURL(new Blob([_base64ToArrayBuffer(wasm_codearray)], { type: 'application/wasm' }));
-    } else {
-        wasm_url = wasm_base + "/" + file;
+    function _wasm_url(file) {
+        var wasm_url = "";
+        if (wasm_codearray) {
+            wasm_url = URL.createObjectURL(new Blob([_base64ToArrayBuffer(wasm_codearray)], { type: 'application/wasm' }));
+        } else {
+            wasm_url = wasm_base + "/" + file;
+        }
+        return wasm_url;
     }
 
     const sqlPromise = initSqlJs({
-        locateFile: file => wasm_url
+        locateFile: _wasm_url
     });
 
     if (sqlite_db) {

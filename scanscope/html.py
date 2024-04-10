@@ -131,9 +131,12 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False, sqlite_db=Non
         import base64
 
         sqlite_db = base64.b64encode(sqlite_db).decode()
-        filename = SCRIPT_PATH / "static" / "sql-wasm.wasm"
-        sql_wasm = open(filename, "rb").read()
-        sql_wasm = base64.b64encode(sql_wasm).decode()
+        if use_cdn:
+            sql_wasm = ""
+        else:
+            filename = SCRIPT_PATH / "static" / "sql-wasm.wasm"
+            sql_wasm = open(filename, "rb").read()
+            sql_wasm = base64.b64encode(sql_wasm).decode()
     else:
         sql_wasm = ""
 

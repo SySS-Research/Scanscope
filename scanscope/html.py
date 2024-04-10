@@ -138,7 +138,7 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False):
             css_files.append(file)
 
     # Render templates
-    for page in ["index.html", "hosts.html", "services.html", "info.html"]:
+    for page in ["index.html", "hosts.html", "services.html", "info.html", "licenses.html"]:
         template = scanscope_env.get_template(page)
         _js_files, _css_files = get_resources(js_files, css_files, page)
         html = template.render(css_files=_css_files, js_files=_js_files, **context)
@@ -210,6 +210,7 @@ def get_resources(js_files, css_files, page):
     resource_map = {
         "index.html": [],
         "info.html": [],
+        "licenses.html": [],
         "diagram.html": [
             "diagram-aux.js",
             "sql-aux.js",

@@ -21,7 +21,7 @@ def test_write_html(reduced_portscan_data):
 
         files = os.listdir(tmpdir)
 
-        for file in ["diagram", "index", "hosts", "info"]:
+        for file in ["diagram", "index", "hosts", "info", "licenses"]:
             assert f"{file}.html" in files
             html = open(Path(tmpdir) / f"{file}.html", "r").read()
             assert "bootstrap.bundle.min.js" in html

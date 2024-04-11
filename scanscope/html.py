@@ -139,6 +139,7 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False, sqlite_db=Non
             sql_wasm = base64.b64encode(sql_wasm).decode()
     else:
         sql_wasm = ""
+        sqlite_db = ""
 
     context = dict(
         theme="dark",

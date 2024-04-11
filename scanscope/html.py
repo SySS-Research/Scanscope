@@ -172,7 +172,7 @@ def write_html(plot, title, output_dir, context={}, use_cdn=False, sqlite_db=Non
         "services.html",
         "info.html",
         "licenses.html",
-    ]:
+    ] + (["_test.html"] if os.environ.get("SCANSCOPE_DEBUG") else []):
         template = scanscope_env.get_template(page)
         _js_files, _css_files = get_resources(js_files, css_files, page)
         html = template.render(css_files=_css_files, js_files=_js_files, **context)
@@ -234,6 +234,8 @@ def get_sidebar():
         {"title": "Diagram", "link": "diagram.html"},
         {"title": "Info", "link": "info.html"},
     ]
+    if os.environ.get("SCANSCOPE_DEBUG"):
+        result.append({"title": "Test", "link": "_test.html"})
     return result
 
 

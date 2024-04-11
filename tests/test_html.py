@@ -71,6 +71,8 @@ def test_interactive_html_output(reduced_portscan_data):
     from scanscope.html import write_output
     from scanscope.html import get_bokeh_plot
 
+    os.environ["SCANSCOPE_DEBUG"] = "true"
+
     tmpdir = SCRIPT_PATH / "_output" / "default"
     bokeh_plot = get_bokeh_plot(reduced_portscan_data)
     write_output(reduced_portscan_data, bokeh_plot, "TestTitle", tmpdir)

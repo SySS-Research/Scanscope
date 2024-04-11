@@ -1,35 +1,48 @@
-// nmap top 14:
-// 21-23,25,53,80,110,135,139,143,443,445,3306,3389
-//
-const portStylesTCP = {
-    "21": { "color": "success", },
-    "22": { "color": "danger", },
-    "23": { "color": "info", },
-    "25": { "color": "dark", },
-    "53": { "color": "success", "dashed": true},
-    "80": { "color": "primary", },
-    "110": { "color": "info", "dashed": true},
-    "135": { "color": "primary", "dashed": true},
-    "139": { "color": "dark", "dashed": true},
-    "143": { "color": "danger", "dashed": true},
-    "443": { "color": "warning", },
-    "445": { "color": "warning", "dashed": true},
-    "3306": { "color": "light", "dashed": true},
-    "3398": { "color": "light", },
+// nmap top TCP ports:
+// https://raw.githubusercontent.com/nmap/nmap/master/nmap-services
+// cat nmap-services|sort -k3 -r |grep -vE '^#'|cut -f2  | grep tcp | head -n 24
+function portStylesTCP(theme) {
+    const topPorts = [80, 23, 443, 21, 22, 25, 3389, 110, 445, 139, 143, 53, 135, 3306, 8080, 1723, 111, 995];
+    const colors = ["success", "danger", "info", theme == "dark" ? "light" : "dark", "warning", "primary"];
+
+    result = {};
+
+    [null, "dashed", "thick"].forEach((style, j) => {
+        colors.forEach((color, i) => {
+            var item = {}
+            item.color = color;
+            item[style] = true;
+            result[topPorts[colors.length*j + i]] = item;
+        });
+    });
+
+    return result;
 };
-// nmap top 7/udp:
-// 123,137-138,161,445,631,1434
-const portStylesUDP = {
-    "123": "success",
-    "137": "danger",
-    "138": "info",
-    "161": "dark",
-    "445": "warning",
-    "631": "light",
-    "1434": "primary",
+
+// nmap top UDP ports:
+// see above
+//
+function portStylesUDP(theme) {
+    const topPorts = [631, 161, 137, 123, 138, 1434, 445, 135, 67, 53, 139, 500];
+    const colors = ["success", "danger", "info", theme == "dark" ? "light" : "dark", "warning", "primary"];
+
+    result = {};
+
+    [null, "clipped"].forEach((style, j) => {
+        colors.forEach((color, i) => {
+            var item = {}
+            item.color = color;
+            item[style] = true;
+            result[topPorts[colors.length*j + i]] = item;
+        });
+    });
+
+    return result;
 }
 
 async function addPortHints() {
+    const bootstrap_theme = document.getElementsByTagName('html')[0].dataset.bsTheme;
+
     const ports = document.querySelectorAll("span.scanscope-port");
     let proto = null;
     let portMap = null;
@@ -38,7 +51,7 @@ async function addPortHints() {
         var text = p.innerText;
 
         if (text[0] == '-') {
-            text = text.slice(1, text.length-1);
+            text = text.slice(1, text.length);
             portMap = portMapUDP;
             proto = "udp";
         } else {
@@ -47,24 +60,38 @@ async function addPortHints() {
         }
 
         p.setAttribute("title", `${text}/${proto}: ${portMap[text]}`);
+        p.classList.add("badge", "rounded-pill", "border", "border-secondary");
 
         if (proto === "udp") {
             p.classList.remove("border");
             p.classList.add("badge-secondary");
         }
 
-        if (portStylesTCP[text] && proto === "tcp") {
+        const tcpStyle = portStylesTCP(bootstrap_theme)[text];
+        const udpStyle = portStylesUDP(bootstrap_theme)[text];
+
+        if (tcpStyle && proto === "tcp") {
             p.classList.remove("border-secondary");
-            p.classList.add("border-" + portStylesTCP[text].color);
-            if (portStylesTCP[text].dashed) {
+            p.classList.add("border-" + tcpStyle.color);
+            if (tcpStyle.dashed) {
                 p.setAttribute("style", "border-style: dashed !important;");
             }
-            if (portStylesTCP[text].thick) {
+            if (tcpStyle.thick) {
                 p.setAttribute("style", "border-width: 3px !important;");
             }
-        } else if (portStylesUDP[text] && proto === "udp") {
+        } else if (udpStyle && proto === "udp") {
             p.classList.remove("badge-secondary");
-            p.classList.add("badge-" + portStylesUDP[text]);
+            p.classList.add("bg-" + udpStyle.color);
+            if (udpStyle.clipped) {
+                p.setAttribute("style", "border-style: solid; !important;");
+            }
+
+            if (udpStyle.color == "light") {
+                p.classList.add("text-dark");
+            }
+            if (udpStyle.color == "dark") {
+                p.classList.add("text-white");
+            }
         }
     });
 }

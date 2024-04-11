@@ -267,10 +267,10 @@ def get_resources(js_files, css_files, page):
         ],
     }
     _js_files = [
-        file for file in js_files if Path(file).name in resource_map[page] + common
+        file for file in js_files if Path(file).name in resource_map.get(page, []) + common
     ]
     _css_files = [
-        file for file in css_files if Path(file).name in resource_map[page] + common
+        file for file in css_files if Path(file).name in resource_map.get(page, []) + common
     ]
 
     return _js_files, _css_files

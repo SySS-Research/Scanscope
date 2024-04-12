@@ -1,39 +1,21 @@
-// nmap top TCP ports:
+// nmap top TCP/UDP ports:
 // https://raw.githubusercontent.com/nmap/nmap/master/nmap-services
 // cat nmap-services|sort -k3 -r |grep -vE '^#'|cut -f2  | grep tcp | head -n 24
-function portStylesTCP(theme) {
-    const topPorts = [80, 23, 443, 21, 22, 25, 3389, 110, 445, 139, 143, 53, 135, 3306, 8080, 1723, 111, 995];
-    const colors = ["success", "danger", "info", theme == "dark" ? "light" : "dark", "warning", "primary"];
+// Decision: Replace 111/tcp with 88/tcp (=kerberos; important in windows networks)
 
-    result = {};
+const topTCPPorts = [80, 23, 443, 21, 22, 25, 3389, 110, 445, 139, 143, 53, 135, 3306, 8080, 1723, 88, 995];
+const topUDPPorts = [631, 161, 137, 123, 138, 1434, 445, 135, 67, 53, 139, 500];
+const portColors = theme => ["success", "danger", "info", theme == "dark" ? "light" : "dark", "warning", "primary"];
 
-    [null, "dashed", "thick"].forEach((style, j) => {
-        colors.forEach((color, i) => {
+function portStyles(theme, topPorts, styles) {
+    const result = {};
+
+    styles.forEach((style, j) => {
+        portColors(theme).forEach((color, i) => {
             var item = {}
             item.color = color;
             item[style] = true;
-            result[topPorts[colors.length*j + i]] = item;
-        });
-    });
-
-    return result;
-};
-
-// nmap top UDP ports:
-// see above
-//
-function portStylesUDP(theme) {
-    const topPorts = [631, 161, 137, 123, 138, 1434, 445, 135, 67, 53, 139, 500];
-    const colors = ["success", "danger", "info", theme == "dark" ? "light" : "dark", "warning", "primary"];
-
-    result = {};
-
-    [null, "clipped"].forEach((style, j) => {
-        colors.forEach((color, i) => {
-            var item = {}
-            item.color = color;
-            item[style] = true;
-            result[topPorts[colors.length*j + i]] = item;
+            result[topPorts[portColors(theme).length*j + i]] = item;
         });
     });
 
@@ -42,6 +24,8 @@ function portStylesUDP(theme) {
 
 async function addPortHints() {
     const bootstrap_theme = document.getElementsByTagName('html')[0].dataset.bsTheme;
+    const tcpStyles = portStyles(bootstrap_theme, topTCPPorts, [null, "dashed", "thick"]);
+    const udpStyles = portStyles(bootstrap_theme, topUDPPorts, [null, "clipped"]);
 
     const ports = document.querySelectorAll("span.scanscope-port");
     let proto = null;
@@ -67,8 +51,8 @@ async function addPortHints() {
             p.classList.add("badge-secondary");
         }
 
-        const tcpStyle = portStylesTCP(bootstrap_theme)[text];
-        const udpStyle = portStylesUDP(bootstrap_theme)[text];
+        const tcpStyle = tcpStyles[text];
+        const udpStyle = udpStyles[text];
 
         if (tcpStyle && proto === "tcp") {
             p.classList.remove("border-secondary");

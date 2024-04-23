@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Test</h3>
+<p>
+<script>
+const portMapTCP = {{port_map_tcp}};
+const portMapUDP = {{port_map_udp}};
+topTCPPorts.forEach(p => {document.write(`<span class="scanscope-port">${p}</span>`)});
+topUDPPorts.forEach(p => {document.write(`<span class="scanscope-port">-${p}</span>`)});
+addPortHints();
+</script>
+{% endblock %}

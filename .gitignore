@@ -1,4 +1,7 @@
-_*
+_dev
+_version.py
+tests/_output
+
 # Build artifacts
 /build
 /dist

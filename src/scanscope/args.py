@@ -1,19 +1,19 @@
 import argparse
 import logging
 
-from scanscope._meta import __version__, __doc__
+from scanscope._version import __version__
 
 log = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser(
-    description=__doc__,
+    description="Visualize portscan results"
 )
 
 parser.add_argument(
     "-v",
     "--version",
     action="version",
-    version="scanscope %s" % __version__,
+    version=__version__,
 )
 
 parser.add_argument(

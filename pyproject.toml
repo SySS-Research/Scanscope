@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.24.2", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
 
 [project]
 name = "scanscope"
@@ -35,8 +35,11 @@ dependencies = [
     'zundler',
 ]
 
-[tool.setuptools]
-packages = ["scanscope"]
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/scanscope/_version.py"
 
 [project.scripts]
 scanscope = "scanscope.__main__:main"

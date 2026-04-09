@@ -52,6 +52,9 @@ select = [
 ]
 ignore = []
 
+[tool.hatch.build.targets.sdist]
+include = ["src/"]
+
 [tool.hatch.version]
 source = "vcs"
 

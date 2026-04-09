@@ -13,12 +13,65 @@ document.scanscope.topUDPPorts = [
 	631, 161, 137, 123, 138, 1434, 445, 135, 67, 53, 139, 500,
 ];
 
-function portColors(theme) {
+/**
+ * Calculate smart tooltip position that avoids going off-screen.
+ * @param {number} mouseX - Mouse X position
+ * @param {number} mouseY - Mouse Y position
+ * @param {HTMLElement} tooltip - The tooltip element
+ * @param {number} offset - Offset from cursor (default: 10px)
+ * @returns {{left: string, top: string}} - CSS position values
+ */
+function calculateTooltipPosition(mouseX, mouseY, tooltip, offset = 10) {
+	const padding = 5; // Extra padding from screen edge
+	const cursorWidth = 10; // Approximate cursor width
+
+	// Get tooltip dimensions
+	const tooltipRect = tooltip.getBoundingClientRect();
+	const tooltipWidth = tooltipRect.width || 200; // fallback if not rendered yet
+	const tooltipHeight = tooltipRect.height || 100;
+
+	// Get viewport dimensions
+	const viewportWidth = window.innerWidth;
+	const viewportHeight = window.innerHeight;
+
+	// Calculate initial position (to the right and below cursor)
+	let left = mouseX + cursorWidth + offset;
+	let top = mouseY + offset;
+
+	// Check if tooltip would go off right edge
+	if (left + tooltipWidth + padding > viewportWidth) {
+		// Flip to left side of cursor
+		left = mouseX - tooltipWidth - offset;
+	}
+
+	// Check if tooltip would go off bottom edge
+	if (top + tooltipHeight + padding > viewportHeight) {
+		// Flip above cursor
+		top = mouseY - tooltipHeight - offset;
+	}
+
+	// Ensure tooltip doesn't go off left edge (if flipped)
+	if (left < padding) {
+		left = padding;
+	}
+
+	// Ensure tooltip doesn't go off top edge (if flipped)
+	if (top < padding) {
+		top = padding;
+	}
+
+	return {
+		left: `${left}px`,
+		top: `${top}px`
+	};
+}
+
+function portColors() {
 	return [
 		"success",
 		"danger",
 		"info",
-		theme === "dark" ? "light" : "dark",
+		"light",
 		"warning",
 		"primary",
 	];
@@ -144,15 +197,15 @@ document.scanscope.columns = {
 	],
 };
 
-function portStyles(theme, topPorts, styles) {
+function portStyles(topPorts, styles) {
 	const result = {};
 
 	styles.forEach((style, j) => {
-		portColors(theme).forEach((color, i) => {
+		portColors().forEach((color, i) => {
 			const item = {};
 			item.color = color;
 			item[style] = true;
-			result[topPorts[portColors(theme).length * j + i]] = item;
+			result[topPorts[portColors().length * j + i]] = item;
 		});
 	});
 
@@ -160,15 +213,11 @@ function portStyles(theme, topPorts, styles) {
 }
 
 function addPortHints(fragment) {
-	const bootstrap_theme =
-		document.getElementsByTagName("html")[0].dataset.bsTheme;
 	const tcpStyles = portStyles(
-		bootstrap_theme,
 		document.scanscope.topTCPPorts,
 		[null, "dashed", "thick"],
 	);
 	const udpStyles = portStyles(
-		bootstrap_theme,
 		document.scanscope.topUDPPorts,
 		[null, "clipped"],
 	);
@@ -227,6 +276,200 @@ function addPortHints(fragment) {
 			}
 		}
 	}
+}
+
+function createPortSpan(p, template) {
+	const port = template.content.cloneNode(true);
+	const portSpan = port.querySelector("span.scanscope-port");
+	portSpan.innerText = p;
+	return portSpan;
+}
+
+/**
+ * Convert category name to numeric value for visualization
+ * @param {string} category - Category name
+ * @returns {number} - Numeric category value
+ */
+function getCategoryNumber(category) {
+	const categories = {
+		'web': 0,
+		'database': 1,
+		'mail': 2,
+		'remote_access': 3,
+		'file_sharing': 4,
+		'monitoring': 5,
+		'empty': 6,
+		'other': 7
+	};
+	return categories[category] || 7;
+}
+
+/**
+ * Convert numeric category value to display name
+ * @param {number} num - Numeric category value
+ * @returns {string} - Category display name
+ */
+function getCategoryName(num) {
+	const names = ['Web', 'Database', 'Mail', 'Remote Access', 'File Sharing', 'Monitoring', 'Empty', 'Other'];
+	return names[num] || 'Other';
+}
+
+/**
+ * Get color from data based on the specified color scheme
+ * @param {Object} data - Data object containing color_* properties
+ * @param {string} scheme - Color scheme name (category, cluster, port_count, fingerprint)
+ * @returns {string} - Color value (hex or CSS color)
+ */
+function getColorByScheme(data, scheme) {
+	const colorMap = {
+		'category': data.color_category,
+		'cluster': data.color_cluster,
+		'port_count': data.color_port_count,
+		'fingerprint': data.color_fingerprint
+	};
+	return colorMap[scheme] || data.color_category || '#999';
+}
+
+/**
+ * Add a window resize handler that calls update function when chart is initialized
+ * @param {Function} getChartRef - Function that returns the chart reference
+ * @param {Function} updateFn - Function to call on resize
+ * @returns {Function} - Event listener function (for potential cleanup)
+ */
+function addResizeHandler(getChartRef, updateFn) {
+	const handler = () => {
+		const chartRef = getChartRef();
+		if (chartRef !== null && chartRef !== undefined) {
+			updateFn();
+		}
+	};
+	window.addEventListener('resize', handler);
+	return handler;
+}
+
+/**
+ * Display tooltip with popup content at smart position
+ * @param {HTMLElement} tooltipElement - The tooltip DOM element
+ * @param {DocumentFragment} popupContent - Content to display in tooltip
+ * @param {number} pageX - Mouse X position
+ * @param {number} pageY - Mouse Y position
+ */
+function showTooltipWithContent(tooltipElement, popupContent, pageX, pageY) {
+	if (!popupContent) {
+		return;
+	}
+
+	tooltipElement.innerHTML = '';
+	tooltipElement.appendChild(popupContent);
+	tooltipElement.style.display = 'block';
+
+	const position = calculateTooltipPosition(pageX, pageY, tooltipElement);
+	tooltipElement.style.left = position.left;
+	tooltipElement.style.top = position.top;
+}
+
+/**
+ * Update tooltip position (for mousemove events)
+ * @param {HTMLElement} tooltipElement - The tooltip DOM element
+ * @param {number} pageX - Mouse X position
+ * @param {number} pageY - Mouse Y position
+ */
+function updateTooltipPosition(tooltipElement, pageX, pageY) {
+	const position = calculateTooltipPosition(pageX, pageY, tooltipElement);
+	tooltipElement.style.left = position.left;
+	tooltipElement.style.top = position.top;
+}
+
+/**
+ * Hide tooltip
+ * @param {HTMLElement} tooltipElement - The tooltip DOM element
+ */
+function hideTooltip(tooltipElement) {
+	tooltipElement.style.display = 'none';
+}
+
+/**
+ * Create a map from fingerprints to values from data arrays
+ * @param {Array<number>} indices - Array of data indices
+ * @param {Object} data - Data object containing arrays
+ * @param {string} fieldName - Name of the field to map (e.g., 'cluster', 'category')
+ * @param {Function|null} customLogic - Optional custom logic for special cases (e.g., color_map handling)
+ * @returns {Object} - Map from fingerprint to field value
+ */
+function createFingerprintMap(indices, data, fieldName, customLogic = null) {
+	const resultMap = {};
+
+	if (customLogic) {
+		return customLogic(indices, data, resultMap);
+	}
+
+	if (data[fieldName]) {
+		for (const i of indices) {
+			resultMap[data.fingerprint[i]] = data[fieldName][i];
+		}
+	}
+
+	return resultMap;
+}
+
+/**
+ * Populate cluster and category metadata in a host element
+ * @param {DocumentFragment|Element} hostElement - Element containing the popup structure
+ * @param {number|undefined} cluster - Cluster ID (-1 for outliers, undefined/null if not available)
+ * @param {string|undefined} category - Category name
+ */
+function populateHostMetadata(hostElement, cluster, category) {
+	const clusterSpan = hostElement.querySelector(".popup-cluster");
+	const categorySpan = hostElement.querySelector(".popup-category");
+	const separatorSpan = hostElement.querySelector(".popup-separator");
+
+	if (cluster !== undefined && cluster !== null) {
+		clusterSpan.textContent = cluster === -1 ? "Outlier" : `Cluster ${cluster}`;
+	}
+
+	if (category) {
+		categorySpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+	}
+
+	if ((cluster !== undefined && cluster !== null) && category) {
+		separatorSpan.textContent = " | ";
+	}
+}
+
+async function createHostsPopupForFingerprint(fingerprint, color, cluster, category) {
+	const templateHost = document.getElementById("template-popup-host");
+	const templatePort = document.getElementById("template-port");
+
+	if (!templateHost || !templatePort) {
+		console.error("Popup templates not found");
+		return null;
+	}
+
+	const hostGroups = await getHostGroupsByFingerprints([fingerprint]);
+	if (!hostGroups || !hostGroups.values || hostGroups.values.length === 0) {
+		return null;
+	}
+
+	const h = hostGroups.values[0];
+	const host = templateHost.content.cloneNode(true);
+	host.querySelector(".group-size").textContent =
+		h[hostGroups.columns.indexOf("ip_addresses")].split(",").length;
+	ports = h[hostGroups.columns.indexOf("port_numbers")].split(",");
+	const portList = host.querySelector(".tcp-ports");
+	for (p of ports) {
+		portList.appendChild(createPortSpan(p, templatePort));
+	}
+
+	host.querySelector("rect").setAttribute("fill", color);
+
+	populateHostMetadata(host, cluster, category);
+
+	const fragment = document.createDocumentFragment();
+	fragment.appendChild(host);
+
+	addPortHints(fragment);
+
+	return fragment;
 }
 
 function addContextMenus(fragment) {

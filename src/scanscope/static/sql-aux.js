@@ -100,35 +100,38 @@ async function getHostsByIndices(indices) {
 }
 
 async function getHostGroupsByFingerprints(fingerprints) {
+	// Separate null/NaN and non-null fingerprints
+	// NaN, null, and undefined all represent hosts with no fingerprint
+	const hasNull = fingerprints.some(fp => fp === null || fp === undefined || (typeof fp === 'number' && isNaN(fp)));
+	const nonNullFingerprints = fingerprints.filter(fp => fp !== null && fp !== undefined && !(typeof fp === 'number' && isNaN(fp)));
+
+	// Build WHERE clause to handle both null and non-null fingerprints
+	let whereClause = '';
+	if (hasNull && nonNullFingerprints.length > 0) {
+		whereClause = `(main_hosts.fingerprint IS NULL OR main_hosts.fingerprint IN ("${nonNullFingerprints.join('","')}"))`;
+	} else if (hasNull) {
+		whereClause = 'main_hosts.fingerprint IS NULL';
+	} else {
+		whereClause = `main_hosts.fingerprint IN ("${nonNullFingerprints.join('","')}")`;
+	}
+
 	const sql = `
 SELECT
-    h.fingerprint,
-    GROUP_CONCAT(DISTINCT h.ip_address ORDER BY h.ip_address_int) AS ip_addresses,
-    COALESCE(GROUP_CONCAT(h.hostname ORDER BY h.ip_address_int), '') AS hostnames,
-    (
-        SELECT GROUP_CONCAT(p.port_number)
-        FROM ports p
-        WHERE p.host_id IN (
-            SELECT h2.id
-            FROM hosts h2
-            WHERE h2.fingerprint = h.fingerprint
-        )
-        GROUP BY p.host_id
-        ORDER BY p.port_number ASC
-    ) AS port_numbers
+    main_hosts.fingerprint,
+    GROUP_CONCAT(DISTINCT main_hosts.ip_address ORDER BY main_hosts.ip_address_int) AS ip_addresses,
+    COALESCE(GROUP_CONCAT(DISTINCT main_hosts.hostname ORDER BY main_hosts.ip_address_int), '') AS hostnames,
+    COALESCE((
+        SELECT GROUP_CONCAT(DISTINCT p.port_number ORDER BY p.port_number ASC)
+        FROM hosts h2
+        LEFT JOIN ports p ON h2.id = p.host_id
+        WHERE (main_hosts.fingerprint IS NOT NULL AND h2.fingerprint = main_hosts.fingerprint)
+           OR (main_hosts.fingerprint IS NULL AND h2.fingerprint IS NULL)
+    ), '') AS port_numbers
 FROM
-    hosts h
-INNER JOIN
-    ports p ON h.id = p.host_id
+    hosts main_hosts
+WHERE ${whereClause}
 GROUP BY
-    h.fingerprint
-HAVING
-    COUNT(DISTINCT p.port_number) = (
-        SELECT COUNT(*)
-        FROM ports p2
-        WHERE p2.host_id = h.id
-    )
-AND h.fingerprint IN ("${fingerprints.join('","')}")
+    main_hosts.fingerprint
     `;
 	const result = document.scanscope.db.exec(sql);
 	return result[0];

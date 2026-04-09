@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 grey = "\x1b[38m"
 yellow = "\x1b[33m"
@@ -8,20 +9,20 @@ bold_red = "\x1b[31;1m"
 reset = "\x1b[0m"
 
 # add success level
-logging.SUCCESS = 25  # between WARNING and INFO
-logging.addLevelName(logging.SUCCESS, "SUCCESS")
+logging.SUCCESS = 25  # type: ignore[attr-defined]  # between WARNING and INFO
+logging.addLevelName(logging.SUCCESS, "SUCCESS")  # type: ignore[attr-defined]
 
 
-def color_map(_format):
-    FORMATS = {
+def color_map(_format: str) -> dict[int, str]:
+    formats = {
         logging.DEBUG: grey + _format + reset,
         logging.INFO: _format,
         logging.WARNING: yellow + _format + reset,
         logging.ERROR: red + _format + reset,
         logging.CRITICAL: bold_red + _format + reset,
-        logging.SUCCESS: green + _format + reset,
+        logging.SUCCESS: green + _format + reset,  # type: ignore[attr-defined]
     }
-    return FORMATS
+    return formats
 
 
 class CustomFormatter(logging.Formatter):
@@ -36,7 +37,7 @@ class CustomFormatter(logging.Formatter):
 
     FORMATS = color_map(_format)
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt, "%Y-%m-%d %H:%M:%S")
         return formatter.format(record)
@@ -48,16 +49,16 @@ class CustomFormatterDebug(CustomFormatter):
     FORMATS = color_map(_format)
 
 
-def init_logging(loglevel=logging.INFO, logfile=None):
+def init_logging(loglevel: str | int = logging.INFO, logfile: str | None = None) -> None:
     # create logger
     logger = logging.getLogger()
     logger.setLevel(loglevel)
 
     # add success level
-    def success(self, message, *args, **kwargs):
-        self._log(logging.SUCCESS, message, args, **kwargs)
+    def success(self: logging.Logger, message: str, *args: Any, **kwargs: Any) -> None:
+        self._log(logging.SUCCESS, message, args, **kwargs)  # type: ignore[attr-defined]
 
-    logging.Logger.success = success
+    logging.Logger.success = success  # type: ignore[attr-defined]
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()

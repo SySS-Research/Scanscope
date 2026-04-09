@@ -1,8 +1,8 @@
-import sqlite3
 import os
+import sqlite3
 
 
-def create_connection(db_file):
+def create_connection(db_file: str) -> sqlite3.Connection:
     """Create a database connection to the SQLite database specified by db_file"""
     try:
         os.unlink(db_file)
@@ -12,7 +12,7 @@ def create_connection(db_file):
     return conn
 
 
-def create_table(conn):
+def create_table(conn: sqlite3.Connection) -> None:
     """Create tables in the SQLite database"""
     sql_create_hosts_table = """
     CREATE TABLE IF NOT EXISTS hosts (
@@ -47,11 +47,11 @@ def create_table(conn):
     c.execute(sql_create_ports_index)
 
 
-def insert_host(conn, host):
+def insert_host(conn: sqlite3.Connection, host: tuple[str, int, str | None, str | None, str | None]) -> int | None:
     """
     Insert a new host into the hosts table
     :param conn: Connection object
-    :param host: A tuple (ip_address, hostname)
+    :param host: A tuple (ip_address, ip_address_int, fingerprint, hostname, os)
     :return: host id
     """
     sql = """ INSERT INTO hosts(ip_address, ip_address_int, fingerprint, hostname, os)
@@ -61,7 +61,7 @@ def insert_host(conn, host):
     return cur.lastrowid
 
 
-def insert_port(conn, port):
+def insert_port(conn: sqlite3.Connection, port: tuple[int | None, int, str]) -> None:
     """
     Insert a new port into the ports table
     :param conn: Connection object

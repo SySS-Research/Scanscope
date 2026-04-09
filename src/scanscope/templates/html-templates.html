@@ -5,8 +5,15 @@
 
 <template id="template-popup-host">
 <div class="mw-25 bokeh-popup-host">
-    <svg class="rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff" fill-opacity="0.8"></rect></svg>
-    <span class="group-size"></span> hosts: <span class="tcp-ports text-secondary"></span>
+    <div class="popup-metadata mb-1" style="font-size: 11px;">
+        <span class="popup-cluster text-info"></span>
+        <span class="popup-separator text-muted"></span>
+        <span class="popup-category text-warning"></span>
+    </div>
+    <div>
+        <svg class="rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff" fill-opacity="0.8"></rect></svg>
+        <span class="group-size"></span> hosts: <span class="tcp-ports text-secondary"></span>
+    </div>
 </div>
 </template>
 

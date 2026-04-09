@@ -22,17 +22,56 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    'beautifulsoup4',
-    'bokeh>=3.2',
+    'bokeh>=3.7',
+    'click',
+    'hdbscan>=0.8.0',
     'lxml',
+    'pandas',
     'python-libnmap',
-    'umap-learn',
-    'pyxdg',
+    'scikit-learn',
     'zundler',
 ]
 
+[project.urls]
+"Homepage" = "https://github.com/SySS-Research/Scanscope"
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["src/scanscope/portmap.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "UP", # pyupgrade
+    "B",  # flake8-bugbear
+    #  "S",  # flake8-bandit
+]
+ignore = []
+
 [tool.hatch.version]
 source = "vcs"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+    "pyright",
+    "ruff",
+    'beautifulsoup4',
+    'pytest',
+    'umap-learn',
+]
+umap = [
+    "umap-learn",
+]
+optimize = [
+    "optuna>=4.0.0",
+    "plotly",
+    "umap-learn",  # Optimization typically uses UMAP
+]
 
 [project.scripts]
 scanscope = "scanscope.__main__:main"

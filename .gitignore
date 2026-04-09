@@ -12,6 +12,7 @@ __pycache__
 *.egg-info
 .*cache*
 .idea
+_output
 
 # OS-specific files
 .DS_Store

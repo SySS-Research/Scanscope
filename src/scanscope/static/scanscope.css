@@ -78,3 +78,19 @@ span.scanscope-host-address {
 div.table td{
     font-family: monospace;
 }
+
+/* Sidebar styling */
+#sidebar {
+    min-height: 100vh;
+    height: 100%;
+}
+
+/* Ensure sidebar links are visible in both themes */
+#sidebar .nav-link a {
+    color: var(--bs-body-color);
+    text-decoration: none;
+}
+
+#sidebar .nav-link a:hover {
+    color: var(--bs-primary);
+}

@@ -2,45 +2,108 @@
 {% block content %}
 <h3>Overview</h3>
 
-{% for report in reports %}
-<h4>Scan {{loop.index}}</h4>
 <dl>
-  <dt>Filename</dt>
-  <dd><code>{{report.filename}}</code></dd>
+  <dt>Scanscope version</dt>
+  <dd><code>{{ scanscope_version }}</code></dd>
 
-  <dt>Nmap command</dt>
-  <dd><code>{{report.commandline}}</code></dd>
-
-  <dt>Nmap version</dt>
-  <dd>{{report.version}}</dd>
-
-  <dt>Scan started</dt>
-  <dd>{{report.started|strftime}}</dd>
-
-  <dt>Scan ended</dt>
-  <dd>{{report.endtime|strftime}}</dd>
-
-  <dt>Scan duration</dt>
-  <dd>{{(report.elapsed/60*100)//100}} min</dd>
-
-  <dt>Total number of hosts</dt>
-  <dd>{{report.hosts_total}}</dd>
-
-  <dt>Number of hosts detected as "up"</dt>
-  <dd>{{report.hosts_up}}</dd>
-
-  <dt>Number of hosts detected as "down"</dt>
-  <dd>{{report.hosts_down}}</dd>
-
-  <dt>Total number of open ports</dt>
-  <dd>{{report.total_open_ports}}</dd>
-
-{#  <dt>Port frequency chart</dt>
-  <dd></dd>
-
-  <dt>Port histogram chart</dt>
-  <dd></dd> #}
+  <dt>Scanscope command</dt>
+  <dd><code>{{ scanscope_command }}</code></dd>
 </dl>
-{% endfor %}
+
+{% if reports|length == 1 %}
+  {# Single scan - no tabs needed #}
+  {% set report = reports[0] %}
+  <h4>Scan Information</h4>
+  <dl>
+    <dt>Filename</dt>
+    <dd><code>{{report.filename}}</code></dd>
+
+    <dt>Nmap command</dt>
+    <dd><code>{{report.commandline}}</code></dd>
+
+    <dt>Nmap version</dt>
+    <dd>{{report.version}}</dd>
+
+    <dt>Scan started</dt>
+    <dd>{{report.started|strftime}}</dd>
+
+    <dt>Scan ended</dt>
+    <dd>{{report.endtime|strftime}}</dd>
+
+    <dt>Scan duration</dt>
+    <dd>{{(report.elapsed/60*100)//100}} min</dd>
+
+    <dt>Total number of hosts</dt>
+    <dd>{{report.hosts_total}}</dd>
+
+    <dt>Number of hosts detected as "up"</dt>
+    <dd>{{report.hosts_up}}</dd>
+
+    <dt>Number of hosts detected as "down"</dt>
+    <dd>{{report.hosts_down}}</dd>
+
+    <dt>Total number of open ports</dt>
+    <dd>{{report.total_open_ports}}</dd>
+  </dl>
+{% else %}
+  {# Multiple scans - use tabs #}
+  <h4>Scan Information</h4>
+  <ul class="nav nav-tabs" id="scanTabs" role="tablist">
+    {% for report in reports %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link {% if loop.index == 1 %}active{% endif %}"
+              id="scan{{loop.index}}-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#scan{{loop.index}}"
+              type="button"
+              role="tab"
+              aria-controls="scan{{loop.index}}"
+              aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">
+        Scan {{loop.index}}
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content" id="scanTabsContent">
+    {% for report in reports %}
+    <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}"
+         id="scan{{loop.index}}"
+         role="tabpanel"
+         aria-labelledby="scan{{loop.index}}-tab">
+      <dl class="mt-3">
+        <dt>Filename</dt>
+        <dd><code>{{report.filename}}</code></dd>
+
+        <dt>Nmap command</dt>
+        <dd><code>{{report.commandline}}</code></dd>
+
+        <dt>Nmap version</dt>
+        <dd>{{report.version}}</dd>
+
+        <dt>Scan started</dt>
+        <dd>{{report.started|strftime}}</dd>
+
+        <dt>Scan ended</dt>
+        <dd>{{report.endtime|strftime}}</dd>
+
+        <dt>Scan duration</dt>
+        <dd>{{(report.elapsed/60*100)//100}} min</dd>
+
+        <dt>Total number of hosts</dt>
+        <dd>{{report.hosts_total}}</dd>
+
+        <dt>Number of hosts detected as "up"</dt>
+        <dd>{{report.hosts_up}}</dd>
+
+        <dt>Number of hosts detected as "down"</dt>
+        <dd>{{report.hosts_down}}</dd>
+
+        <dt>Total number of open ports</dt>
+        <dd>{{report.total_open_ports}}</dd>
+      </dl>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
 
 {% endblock %}

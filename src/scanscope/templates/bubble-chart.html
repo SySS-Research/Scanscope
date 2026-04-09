@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% from macros import embed %}
+
+{% block head %}
+<script>const portMapTCP = {{port_map_tcp}}; const portMapUDP = {{port_map_udp}};</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="toolbar mb-3">
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h4>Bubble Chart View</h4>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#bubble-chart-instructions" aria-expanded="false" aria-controls="bubble-chart-instructions">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+        Instructions
+      </button>
+    </div>
+    <div class="col-auto ms-auto">
+      <label for="color-scheme-select" class="form-label mb-0">Color Scheme:</label>
+    </div>
+    <div class="col-auto">
+      <select id="color-scheme-select" class="form-select form-select-sm">
+        <option value="category">Category (by port type)</option>
+        <option value="cluster">Cluster (by group ID)</option>
+        <option value="port_count">Port Count (gradient)</option>
+        <option value="fingerprint">Fingerprint (hash-based)</option>
+      </select>
+    </div>
+    <div class="col-auto ms-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="hide-empty-hosts" />
+        <label class="form-check-label" for="hide-empty-hosts">
+          Hide hosts with no open ports
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="collapse mb-3" id="bubble-chart-instructions">
+  <div class="card card-body bg-dark border-info">
+    <h6 class="text-info">How to use the Bubble Chart:</h6>
+    <ul class="small mb-0">
+      <li>Each bubble represents a group of hosts with identical port configurations</li>
+      <li>Bubble size indicates the number of hosts in that group</li>
+      <li>Similar port configurations are positioned close together</li>
+      <li>Hover over bubbles to see port details and host count</li>
+      <li>Click bubbles to select and view detailed host information below</li>
+      <li>Use pan and zoom tools to explore the chart</li>
+      <li>Select multiple bubbles with box or lasso selection</li>
+    </ul>
+  </div>
+</div>
+
+<div id="bokeh-div">
+  {%      for doc in docs %}
+  {{        embed(doc) if doc.elementid }}
+  {%-       for root in doc.roots %}
+  {{            embed(root) }}
+  {%        endfor %}
+  {%      endfor %}
+  {{ plot_script }}
+</div>
+<div id="hosts-details">
+</div>
+
+{% include "html-templates.html" %}
+
+<script>
+initDb();
+
+// Try to initialize color scheme selector after a short delay
+// (in case user interacts with it before hovering over the plot)
+setTimeout(() => {
+  const selector = document.getElementById("color-scheme-select");
+  if (selector && !selector.dataset.initialized) {
+    // Disable selector until datasource is available
+    selector.disabled = true;
+    selector.title = "Hover over or click the diagram to enable color switching";
+  }
+}, 100);
+</script>
+
+{% endblock %}

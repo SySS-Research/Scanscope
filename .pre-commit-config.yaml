@@ -1,0 +1,40 @@
+repos:
+  - repo: local
+    hooks:
+      # Ruff linting
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check
+        language: system
+        types: [python]
+        require_serial: false
+        exclude: /migrations/
+
+      # Ruff formatting
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format --check
+        language: system
+        types: [python]
+        require_serial: false
+        exclude: /migrations/
+
+      # Type checking with pyright
+      - id: pyright
+        name: pyright
+        entry: uv run pyright
+        exclude: ^(.venv|docs)/
+        language: system
+        types: [python]
+        require_serial: false
+
+  # Standard pre-commit hooks (non-uv)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: detect-private-key

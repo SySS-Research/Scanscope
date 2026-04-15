@@ -30,6 +30,7 @@ dependencies = [
     'python-libnmap',
     'scikit-learn',
     'zundler',
+    'numba',
 ]
 
 [project.urls]
